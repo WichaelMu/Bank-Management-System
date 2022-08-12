@@ -1,4 +1,5 @@
 ﻿
+
 namespace BankManagementSystem
 {
 	public partial class BMS
@@ -20,6 +21,7 @@ namespace BankManagementSystem
 			Construct();
 		}
 
+		/// <summary>Defines class and application defaults.</summary>
 		static void Construct()
 		{
 			// The width of the console; the border limits.

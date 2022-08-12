@@ -135,11 +135,14 @@ namespace BankManagementSystem
 			PaddingUntilEnd(Phone, CharacterLimit, out int PPadding);
 			PaddingUntilEnd(Email, CharacterLimit, out int EPadding);
 
+			// Blank line.
 			Console.WriteLine();
 
+			// Write Title.
 			PrintTitle(kAccountTitle);
 			PrintNewLineWithBorder(CharacterLimit);
 
+			// Write fields.
 			PrintWithCustomPadding(AccountNo, kTabSize, ANPadding - 4, bWithBorder: true);
 			PrintWithCustomPadding(AccountBalance, kTabSize, ABPadding - 4, bWithBorder: true);
 			PrintWithCustomPadding(FirstName, kTabSize, FNPadding - 4, bWithBorder: true);
@@ -148,6 +151,7 @@ namespace BankManagementSystem
 			PrintWithCustomPadding(Phone, kTabSize, PPadding - 4, bWithBorder: true);
 			PrintWithCustomPadding(Email, kTabSize, EPadding - 4, bWithBorder: true);
 
+			// Ending border.
 			PrintWithBorder(HorizontalBorder);
 		}
 

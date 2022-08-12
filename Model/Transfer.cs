@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 
 namespace BankManagementSystem.Core
 {
@@ -19,6 +17,7 @@ namespace BankManagementSystem.Core
 			this.Balance = Balance;
 		}
 
+		/// <summary>Gets the corresponding <see cref="ETransferType"/> from a string.</summary>
 		public static ETransferType GetType(string Type)
 		{
 			if (Type == "Deposit")
@@ -26,6 +25,7 @@ namespace BankManagementSystem.Core
 			return ETransferType.Withdraw;
 		}
 
+		/// <summary>Sets this type from a string.</summary>
 		public ETransferType TypeFromString(string Type)
 		{
 			this.Type = GetType(Type);
@@ -33,12 +33,14 @@ namespace BankManagementSystem.Core
 			return this.Type;
 		}
 
+		/// <summary>Construct a file-parse-able string from this Transfer.</summary>
 		public override string ToString()
 		{
 			return $"{Date}|{Type}|{Amount}|{Balance}";
 		}
 	}
 
+	/// <summary>Valid Transfer types.</summary>
 	public enum ETransferType
 	{
 		Deposit, Withdraw

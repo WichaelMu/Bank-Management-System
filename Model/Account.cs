@@ -1,6 +1,6 @@
-﻿using System.Text;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using BankManagementSystem.IO;
 
 namespace BankManagementSystem.Core
@@ -30,6 +30,8 @@ namespace BankManagementSystem.Core
 			Transfers = new List<Transfer>();
 		}
 
+		/// <summary>Validates the details of this Account.</summary>
+		/// <returns>Issues regarding this Account's validity, if any.</returns>
 		public EValidationResult Validate()
 		{
 			if (FirstName.Length == 0 || LastName.Length == 0 || Address.Length == 0 || Email.Length == 0)
@@ -64,6 +66,7 @@ namespace BankManagementSystem.Core
 			return (EValidationResult)Result;
 		}
 
+		/// <summary>Updates this Account's file.</summary>
 		public async void Write()
 		{
 			string FirstName = $"First Name|{this.FirstName}";

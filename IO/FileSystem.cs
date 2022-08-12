@@ -11,11 +11,6 @@ namespace BankManagementSystem.IO
 		public const string kDirectory = "./";
 		public const string kFileName = "login.txt";
 
-		public static async Task AddNewLogin(string Username, string Password)
-		{
-			await WriteToFile(kDirectory, kFileName, EWriteMode.Append, Encoding.UTF8, Username + '|' + Password);
-		}
-
 		/// <summary>Writes string lines to a file.</summary>
 		/// <param name="Path">The path of the file to write to.</param>
 		/// <param name="NameOfFile">The name of the file to write to, including it's extension.</param>
@@ -24,6 +19,7 @@ namespace BankManagementSystem.IO
 		/// <param name="Lines">The lines to write.</param>
 		public static async Task WriteToFile(string Path, string NameOfFile, EWriteMode Mode, Encoding Encoding, params string[] Lines)
 		{
+			// Construct the file.
 			string PathAndName = Path + NameOfFile;
 
 			if (Mode == EWriteMode.Overwrite)

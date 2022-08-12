@@ -3,10 +3,10 @@
 #endif
 
 using System;
-using System.Text;
-using System.Net.Mail;
-using System.Net;
 using System.ComponentModel;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
 
 namespace BankManagementSystem.IO
 {

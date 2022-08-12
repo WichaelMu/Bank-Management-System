@@ -35,6 +35,9 @@ namespace BankManagementSystem.Core
 			throw new System.IO.IOException("Unable to open ./login.txt");
 		}
 
+		/// <summary>Retrieves and Constructs an <see cref="Account"/> from a file with the corresponding <see cref="Account.ID"/>.</summary>
+		/// <param name="ID">The <see cref="Account.ID"/>.</param>
+		/// <returns>The <see cref="Account"/> associated with <paramref name="ID"/>.</returns>
 		public static Account ConstructFromFile(int ID)
 		{
 			if (FileSystem.ReadFromFile(FileSystem.kDirectory, ID.ToString() + ".txt", out List<string> AccountDetails))
@@ -97,8 +100,8 @@ namespace BankManagementSystem.Core
 			return null;
 		}
 
+		/// <summary>The next Account Number.</summary>
 		public static int Unique { get => GetNextAccountNumber(); }
-
 		static int UniqueAccountNumber = 10000001;
 
 		static int GetNextAccountNumber()

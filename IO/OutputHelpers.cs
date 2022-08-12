@@ -117,6 +117,7 @@ namespace BankManagementSystem.IO
 				Console.Write(O.ToString() + ' ');
 		}
 
+		/// <summary>Prints a title with borders.</summary>
 		public static void PrintTitle(string Content)
 		{
 			AutoCentre(Content, BMS.CharacterLimit, out int Padding);
@@ -126,8 +127,14 @@ namespace BankManagementSystem.IO
 			PrintWithBorder(BMS.HorizontalBorder);
 		}
 
+		/// <summary>Removes the character from the console under the cursor.</summary>
 		public static void Backspace() => Console.Write(kBackspace);
 
+		/// <summary>
+		/// A string date in the format:
+		/// <br></br>
+		/// DayOfWeek, Day of Month Year HH:mm:ss
+		/// </summary>
 		public static string FormatDate()
 		{
 			DateTime Now = DateTime.Now;

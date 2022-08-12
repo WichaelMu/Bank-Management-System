@@ -56,6 +56,7 @@ namespace BankManagementSystem
 					RunAccountCreationSequence();
 					break;
 				case D2: // Search for an account.
+					RunAccountSearchSequence();
 					break;
 				case D3: // Deposit.
 					break;

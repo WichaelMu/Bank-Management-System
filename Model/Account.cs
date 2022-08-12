@@ -1,17 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace BankManagementSystem.Core
 {
 	public class Account
 	{
+		public int ID;
+
 		public string FirstName;
 		public string LastName;
 		public string Address;
 		public int PhoneNumber;
 		public string Email;
+
+		public int Balance;
+
+		public List<Transfer> Transfers;
 
 		public Account(string FirstName, string LastName, string Address, int PhoneNumber, string Email)
 		{
@@ -20,6 +24,8 @@ namespace BankManagementSystem.Core
 			this.Address = Address;
 			this.PhoneNumber = PhoneNumber;
 			this.Email = Email;
+
+			Transfers = new List<Transfer>();
 		}
 
 		public EValidationResult Validate()

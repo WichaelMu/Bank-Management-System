@@ -27,7 +27,6 @@ namespace BankManagementSystem
 		void PrintCreateNewAccount()
 		{
 			const string kCreateAccountTitle = "CREATE A NEW ACCOUNT";
-			const string kAccountDetailMessage = "ENTER THE DETAILS";
 
 			const string kFirstName = "First Name: ";
 			const string kLastName = "Last Name: ";
@@ -37,7 +36,7 @@ namespace BankManagementSystem
 
 			PrintTitle(kCreateAccountTitle);
 
-			AutoCentre(kAccountDetailMessage, CharacterLimit, out int DetailPadding);
+			AutoCentre(kPrompt, CharacterLimit, out int DetailPadding);
 
 			PaddingUntilEnd(kFirstName, CharacterLimit, out int FNPadding);
 			PaddingUntilEnd(kLastName, CharacterLimit, out int LNPadding);
@@ -45,7 +44,7 @@ namespace BankManagementSystem
 			PaddingUntilEnd(kPhoneNumber, CharacterLimit, out int PNPadding);
 			PaddingUntilEnd(kEmailAddress, CharacterLimit, out int EPadding);
 
-			PrintWithBorder(kAccountDetailMessage, DetailPadding);
+			PrintWithBorder(kPrompt, DetailPadding);
 			PrintNewLineWithBorder(CharacterLimit);
 
 			PrintWithCustomPadding(kFirstName, kTabSize, FNPadding - 4, bWithBorder: true);

@@ -9,6 +9,7 @@ namespace BankManagementSystem.Helpers
 		/// <summary>The character representing the vertical borders.</summary>
 		const char kBorder = '|';
 		const string kBackspace = "\b \b";
+		public const string kPrompt = "ENTER THE DETAILS";
 
 		/// <summary>
 		/// Prints <paramref name="Content"/> with <paramref name="LeftRightPadding"/> on either side

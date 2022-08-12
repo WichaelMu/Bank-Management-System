@@ -102,7 +102,7 @@ namespace BankManagementSystem
 		{
 			Dictionary<string, string> Logins = AccountParser.ReadLogins();
 			bool bUsernameExists = Logins.ContainsKey(Username);
-			bool bLoginMatches = bUsernameExists && Logins[Username] != Password;
+			bool bLoginMatches = bUsernameExists && Logins[Username] == Password;
 
 			if (!bLoginMatches)
 			{

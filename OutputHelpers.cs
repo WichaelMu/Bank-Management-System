@@ -127,5 +127,22 @@ namespace BankManagementSystem.Helpers
 		}
 
 		public static void Backspace() => Console.Write(kBackspace);
+
+		public static string FormatDate()
+		{
+			DateTime Now = DateTime.Now;
+			TimeSpan Time = Now.TimeOfDay;
+			StringBuilder TimeBuilder = new StringBuilder();
+			TimeBuilder
+			.Append(Now.ToString("D"))
+			.Append(" ")
+			.Append(Time.Hours.ToString("D2"))
+			.Append(':')
+			.Append(Time.Minutes.ToString("D2"))
+			.Append(':')
+			.Append(Time.Seconds.ToString("D2"));
+
+			return TimeBuilder.ToString();
+		}
 	}
 }

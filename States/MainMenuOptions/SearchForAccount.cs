@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using BankManagementSystem.Core;
 using BankManagementSystem.IO;
 using static BankManagementSystem.Helpers.OutputHelpers;
@@ -155,7 +154,7 @@ namespace BankManagementSystem
 		/// <summary>Ask the user whether or not to search for another <see cref="Account"/>.</summary>
 		void RequestCheckAnother(bool bHasAccountAlreadyOnScreen)
 		{
-			Console.Write("Check another account (y/n)? ");
+			Console.Write("\nCheck another account (y/n)? ");
 
 			Input.Char(out char Key);
 			while (Key != 'Y' && Key != 'y' && Key != 'N' && Key != 'n')

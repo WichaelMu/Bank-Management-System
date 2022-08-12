@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Text;
+using System.Collections.Generic;
 using System.Linq;
+using BankManagementSystem.IO;
 
 namespace BankManagementSystem.Core
 {
@@ -61,16 +63,41 @@ namespace BankManagementSystem.Core
 
 			return (EValidationResult)Result;
 		}
-	}
 
-	/// <summary>The result of an <see cref="Account"/>'s <see cref="Account.Validate"/>.</summary>
-	public enum EValidationResult : byte
-	{
-		Passed = 0,
-		NoAtSymbol = 1,
-		TooManyAtSymbols = 2,
-		InvalidDomain = 4,
-		IllegalEmailAddress = 8,
-		FieldsEmpty = 16
+		public async void Write()
+		{
+			string FirstName = $"First Name|{this.FirstName}";
+			string LastName = $"Last Name|{this.LastName}";
+			string Address = $"Address|{this.Address}";
+			string Phone = $"Phone|{PhoneNumber}";
+			string Email = $"Email|{this.Email}";
+			string AccountNumber = $"AccountNo|{ID}";
+			string Balance = $"Balance|{this.Balance}";
+
+			await FileSystem.WriteToFile(FileSystem.kDirectory, ID.ToString() + ".txt", EWriteMode.Overwrite, Encoding.UTF8,
+				FirstName,
+				LastName,
+				Address,
+				Phone,
+				Email,
+				AccountNumber,
+				Balance
+			);
+
+			// Preserve Transfer information.
+			foreach (Transfer T in Transfers)
+				await FileSystem.WriteToFile(FileSystem.kDirectory, ID.ToString() + ".txt", EWriteMode.Append, Encoding.UTF8, T.ToString());
+		}
 	}
+}
+
+/// <summary>The result of an <see cref="Account"/>'s <see cref="Account.Validate"/>.</summary>
+public enum EValidationResult : byte
+{
+	Passed = 0,
+	NoAtSymbol = 1,
+	TooManyAtSymbols = 2,
+	InvalidDomain = 4,
+	IllegalEmailAddress = 8,
+	FieldsEmpty = 16
 }

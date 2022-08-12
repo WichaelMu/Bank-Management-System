@@ -32,6 +32,11 @@ namespace BankManagementSystem.Core
 
 			return this.Type;
 		}
+
+		public override string ToString()
+		{
+			return $"{Date}|{Type}|{Amount}|{Balance}";
+		}
 	}
 
 	public enum ETransferType

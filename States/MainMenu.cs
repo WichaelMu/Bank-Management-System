@@ -59,6 +59,7 @@ namespace BankManagementSystem
 					RunAccountSearchSequence();
 					break;
 				case D3: // Deposit.
+					RunDepositSequence();
 					break;
 				case D4: // Withdraw.
 					break;

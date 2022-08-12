@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace BankManagementSystem.Helpers
+namespace BankManagementSystem.IO
 {
 	/// <summary>Utility class that helps with printing to the console.</summary>
 	public static class OutputHelpers

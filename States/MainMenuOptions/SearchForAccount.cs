@@ -1,7 +1,7 @@
 ﻿using System;
 using BankManagementSystem.Core;
 using BankManagementSystem.IO;
-using static BankManagementSystem.Helpers.OutputHelpers;
+using static BankManagementSystem.IO.OutputHelpers;
 
 namespace BankManagementSystem
 {

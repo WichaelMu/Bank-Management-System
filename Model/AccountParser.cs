@@ -34,5 +34,19 @@ namespace BankManagementSystem.Core
 
 			throw new System.IO.IOException("Unable to open ./login.txt");
 		}
+
+		public static int Unique { get => GetNextAccountNumber(); }
+
+		static int UniqueAccountNumber = 10000001;
+
+		static int GetNextAccountNumber()
+		{
+			while (FileSystem.FileExists(FileSystem.kDirectory, UniqueAccountNumber.ToString() + ".txt"))
+			{
+				++UniqueAccountNumber;
+			}
+
+			return UniqueAccountNumber;
+		}
 	}
 }

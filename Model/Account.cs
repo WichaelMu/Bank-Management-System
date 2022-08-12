@@ -24,41 +24,47 @@ namespace BankManagementSystem.Core
 
 		public EValidationResult Validate()
 		{
-			bool bValidPhoneNumber = PhoneNumber <= int.MaxValue;
+			if (FirstName.Length == 0 || LastName.Length == 0 || Address.Length == 0 || Email.Length == 0)
+				return EValidationResult.FieldsEmpty;
 
 			int NumberOfAtSymbols = Email.Count(Character => Character == '@');
 			bool bValidEmailAddress = NumberOfAtSymbols == 1;
 
 			bool bValidDomain = Email.EndsWith("@gmail.com");
-			bValidDomain &= Email.EndsWith("@outlook.com");
-			bValidDomain &= Email.EndsWith("@uts.edu.au");
+			bValidDomain ^= Email.EndsWith("@outlook.com");
+			bValidDomain ^= Email.EndsWith("@student.uts.edu.au");
+			bValidDomain ^= Email.EndsWith("@uts.edu.au");
 
-			if (bValidPhoneNumber && bValidEmailAddress && bValidDomain)
+			bool bValidEmailPrefix = !Email.StartsWith('@') && char.IsLetter(Email[0]);
+
+			if (bValidEmailAddress && bValidDomain && bValidEmailPrefix)
 				return EValidationResult.Passed;
 
-			short Result = 0;
-
-			if (!bValidPhoneNumber)
-				Result |= (short)EValidationResult.InvalidPhone;
+			byte Result = 0;
 
 			if (!bValidDomain)
-				Result |= (short)EValidationResult.InvalidDomain;
+				Result |= (byte)EValidationResult.InvalidDomain;
 
 			if (!bValidEmailAddress)
 				Result |= NumberOfAtSymbols == 0
-					? (short)EValidationResult.NoAtSymbol
-					: (short)EValidationResult.TooManyAtSymbols;
+					? (byte)EValidationResult.NoAtSymbol
+					: (byte)EValidationResult.TooManyAtSymbols;
+
+			if (!bValidEmailPrefix)
+				Result |= (byte)EValidationResult.IllegalEmailAddress;
 
 			return (EValidationResult)Result;
 		}
 	}
 
-	public enum EValidationResult : short
+	/// <summary>The result of an <see cref="Account"/>'s <see cref="Account.Validate"/>.</summary>
+	public enum EValidationResult : byte
 	{
 		Passed = 0,
-		InvalidPhone = 1,
-		NoAtSymbol = 2,
-		TooManyAtSymbols = 4,
-		InvalidDomain = 8
+		NoAtSymbol = 1,
+		TooManyAtSymbols = 2,
+		InvalidDomain = 4,
+		IllegalEmailAddress = 8,
+		FieldsEmpty = 16
 	}
 }

@@ -8,6 +8,7 @@ namespace BankManagementSystem.Helpers
 	{
 		/// <summary>The character representing the vertical borders.</summary>
 		const char kBorder = '|';
+		const string kBackspace = "\b \b";
 
 		/// <summary>
 		/// Prints <paramref name="Content"/> with <paramref name="LeftRightPadding"/> on either side
@@ -26,7 +27,8 @@ namespace BankManagementSystem.Helpers
 			}
 			else
 			{
-				PrintWithCustomPadding(Content, LeftRightPadding, LeftRightPadding, bWithBorder: true);
+				bool bContentIsOdd = Content.Length % 2 == 1;
+				PrintWithCustomPadding(Content, LeftRightPadding, LeftRightPadding - (bContentIsOdd ? 1 : 0), bWithBorder: true);
 			}
 		}
 
@@ -122,5 +124,7 @@ namespace BankManagementSystem.Helpers
 			PrintWithBorder(Content, Padding);
 			PrintWithBorder(BMS.HorizontalBorder);
 		}
+
+		public static void Backspace() => Console.Write(kBackspace);
 	}
 }

@@ -66,6 +66,13 @@ namespace BankManagementSystem.Core
 			return (EValidationResult)Result;
 		}
 
+		public string GetDecoratedName()
+		{
+			char LastChar = FirstName[FirstName.Length - 1];
+			string ApostropheSuffix = LastChar == 'S' || LastChar == 's' ? "'" : "'s";
+			return FirstName + ApostropheSuffix;
+		}
+
 		/// <summary>Updates this Account's file.</summary>
 		public async void Write()
 		{

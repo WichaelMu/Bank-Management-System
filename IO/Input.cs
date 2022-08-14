@@ -70,7 +70,7 @@ namespace BankManagementSystem.IO
 		/// <summary>Reads any key as a stub input.</summary>
 		public static void Any() => Console.ReadKey();
 
-		public static ConsoleKey Key() => Console.ReadKey().Key;
+		public static ConsoleKey Key() => Console.ReadKey(intercept: true).Key;
 
 		public static char Char(out char C) => C = Console.ReadKey(intercept: true).KeyChar;
 	}

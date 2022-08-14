@@ -91,6 +91,12 @@ namespace BankManagementSystem.IO
 		{
 			return File.Exists(Path + NameOfFile);
 		}
+
+		public static void DeleteAccount(int ID)
+		{
+			if (FileExists(kDirectory, ID + ".txt"))
+				File.Delete(kDirectory + ID + ".txt");
+		}
 	}
 
 

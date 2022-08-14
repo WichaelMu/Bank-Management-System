@@ -87,8 +87,6 @@ namespace BankManagementSystem
 			int Amount;
 			string AmountAsString = string.Empty;
 			Account FromID = AccountParser.ConstructFromFile(AccountNumber);
-			char LastChar = FromID.FirstName[FromID.FirstName.Length - 1];
-			string ApostropheSuffix = LastChar == 'S' || LastChar == 's' ? " " : "s ";
 
 			do
 			{
@@ -102,7 +100,7 @@ namespace BankManagementSystem
 				}
 				else if (int.TryParse(AmountAsString, out int TriedAmount) && FromID.Balance < TriedAmount)
 				{
-					Console.WriteLine($"{FromID.FirstName}'{ApostropheSuffix}Account does not have enough balance!");
+					Console.WriteLine($"{FromID.GetDecoratedName()} Account does not have enough balance!");
 				}
 
 				// Set the position to the end of the Account Number.
@@ -124,7 +122,7 @@ namespace BankManagementSystem
 
 			Console.SetCursorPosition(0, 9);
 
-			Console.WriteLine($"Successfully Withdrew ${Amount} from {FromID.FirstName}'{ApostropheSuffix}Account!");
+			Console.WriteLine($"Successfully Withdrew ${Amount} from {FromID.GetDecoratedName()} Account!");
 
 			Console.WriteLine("\nPress any key to return to the Main Menu...");
 			Input.Any();

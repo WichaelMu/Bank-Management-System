@@ -7,24 +7,24 @@ namespace BankManagementSystem
 {
 	public partial class BMS
 	{
-		void RunDepositSequence()
+		void RunDeleteSequence()
 		{
 			Console.Clear();
 
-			PrintDepositPrompts();
-			ReceiveDepositInput();
+			PrintDeletePrompt();
+			ReceiveDeleteInput(out Account Account);
+			ConfirmDelete(Account);
 
 			RunMainMenuSequence();
 		}
 
-		void PrintDepositPrompts()
+		void PrintDeletePrompt()
 		{
-			const string kDepositTitle = "DEPOSIT";
+			const string kDeleteTitle = "DELETE";
 
 			const string kAccountNumberPrompt = "Account Number: ";
-			const string kAmount = "Amount: $";
 
-			PrintTitle(kDepositTitle);
+			PrintTitle(kDeleteTitle);
 
 			AutoCentre(kPrompt, CharacterLimit, out int PromptPadding);
 
@@ -32,15 +32,13 @@ namespace BankManagementSystem
 			PrintNewLineWithBorder(CharacterLimit);
 
 			PaddingUntilEnd(kAccountNumberPrompt, CharacterLimit, out int ANPadding);
-			PaddingUntilEnd(kAmount, CharacterLimit, out int APadding);
 
 			PrintWithCustomPadding(kAccountNumberPrompt, kTabSize, ANPadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(kAmount, kTabSize, APadding - 4, bWithBorder: true);
 
 			PrintWithBorder(HorizontalBorder);
 		}
 
-		void ReceiveDepositInput()
+		void ReceiveDeleteInput(out Account Account)
 		{
 			Console.SetCursorPosition(21, 5);
 
@@ -81,46 +79,40 @@ namespace BankManagementSystem
 			// If the Input is NaN or is > 10, loop.
 			while (!int.TryParse(IntAsString, out AccountNumber) || IntAsString.Length > 10 || !SearchAccountID(AccountNumber));
 
-			Console.SetCursorPosition(14, 6);
+			Account = AccountParser.ConstructFromFile(AccountNumber);
 
-			// Protect the Account Number from being an illegal value.
-			int Amount;
-			string AmountAsString = string.Empty;
-			Account FromID = AccountParser.ConstructFromFile(AccountNumber);
+			Console.Clear();
+			PrintAccount(AccountNumber);
+		}
 
-			do
+		void ConfirmDelete(Account AccountToDelete)
+		{
+			Console.SetCursorPosition(0, 14);
+			Console.WriteLine("Delete Account (y/n)?");
+
+			string DecoratedName = AccountToDelete.GetDecoratedName();
+
+			Input.Char(out char Key);
+			while (Key != 'Y' && Key != 'y' && Key != 'N' && Key != 'n')
 			{
-				Console.SetCursorPosition(0, 9);
-
-				// Cannot exceed a length of 10.
-				if (AmountAsString.Length > 10)
-				{
-					// 1 << 31 is already 10 digits. Prevent overflow.
-					Console.WriteLine("Account Numbers do not exceed 10 digits!");
-				}
-
-				// Set the position to the end of the Account Number.
-				Console.SetCursorPosition(14 + AmountAsString.Length, 6);
-
-				// Backspace any illegal characters (non-number string)
-				for (int i = 0; i < AmountAsString.Length; ++i)
-					Backspace();
-
-				AmountAsString = Input.String();
+				Console.SetCursorPosition(0, 14);
+				Console.Write($"Invalid Response. Valid inputs are (Y/N) or (y/n)\nDo you want to delete {DecoratedName} Account? ");
+				Input.Char(out Key);
 			}
-			// If the Input is NaN, loop.
-			while (!int.TryParse(AmountAsString, out Amount));
 
-			// Update and Write Account to file.
-			FromID.Balance += Amount;
-			FromID.Transfers.Add(new Transfer(FormatDate(), ETransferType.Deposit, Amount, FromID.Balance));
-			FromID.Write();
+			Console.SetCursorPosition(0, 14);
 
-			Console.SetCursorPosition(0, 9);
+			if (Key == 'Y' || Key == 'y')
+			{
+				FileSystem.DeleteAccount(AccountToDelete.ID);
+				Console.WriteLine($"{DecoratedName} Account was Deleted!                       ");
+			}
+			else
+			{
+				Console.WriteLine($"Did not Delete {DecoratedName} Account.                    ");
+			}
 
-			Console.WriteLine($"Successfully Deposited ${Amount} into {FromID.GetDecoratedName()} Account!");
-
-			Console.WriteLine("\nPress any key to return to the Main Menu...");
+			Console.WriteLine("Press any key to return to the Main Menu...");
 			Input.Any();
 		}
 	}

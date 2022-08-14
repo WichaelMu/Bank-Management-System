@@ -1,4 +1,4 @@
-﻿#define WITH_EMAIL
+﻿//#define WITH_EMAIL
 #define WITH_EMAIL_SEND_RESULTS
 
 using System;
@@ -41,7 +41,7 @@ namespace BankManagementSystem.IO
 			Client.SendAsync(EmailMessage, null);
 		}
 #else
-		public static void Dispatch(string Receiver, string Message) { Console.WriteLine($"Send Email to {Receiver} with {Message}"); }
+		public static void Dispatch(string Receiver, string Message, string Subject = "Your Bank Account", bool bBodyIsHTML = true) { Console.WriteLine($"Send Email to {Receiver} with Subject: {Subject}"); }
 #endif // WITH_EMAIL
 
 #if WITH_EMAIL_SEND_RESULTS

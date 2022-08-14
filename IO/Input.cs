@@ -72,6 +72,6 @@ namespace BankManagementSystem.IO
 
 		public static ConsoleKey Key() => Console.ReadKey().Key;
 
-		public static char Char(out char C) => C = Console.ReadKey().KeyChar;
+		public static char Char(out char C) => C = Console.ReadKey(intercept: true).KeyChar;
 	}
 }

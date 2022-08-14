@@ -91,6 +91,20 @@ namespace BankManagementSystem.Core
 			foreach (Transfer T in Transfers)
 				await FileSystem.WriteToFile(FileSystem.kDirectory, ID.ToString() + ".txt", EWriteMode.Append, Encoding.UTF8, T.ToString());
 		}
+
+		public void DispatchDetails()
+		{
+			StringBuilder EmailMessage = new StringBuilder();
+			EmailMessage
+			.Append("<h1>Your New Bank Account Details</h1><br>")
+			.Append($"<h2>Your Account Number: {ID}</h2><br>")
+			.Append($"First Name: {FirstName}<br>")
+			.Append($"Last Name: {LastName}<br>")
+			.Append($"Address: {Address}<br>")
+			.Append($"Current Balance: {Balance}");
+
+			IO.Email.Dispatch(Email, EmailMessage.ToString());
+		}
 	}
 }
 

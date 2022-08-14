@@ -1,8 +1,4 @@
-﻿#if !DEBUG
-#define DISABLE_EMAIL
-#endif
-
-using System;
+﻿using System;
 using System.Text;
 using BankManagementSystem.Core;
 using BankManagementSystem.IO;
@@ -152,20 +148,20 @@ namespace BankManagementSystem
 
 			if (Key == 'Y' || Key == 'y')
 			{
-#if DISABLE_EMAIL
-				Email.Dispatch(NewAccount.Email, "AYO THIS WAS SENT USING C# FOR APPLICATION DEVELOPMENT WITH .NET!");
-#endif
+				int UniqueAccountNumber = AccountParser.Unique;
+				NewAccount.ID = UniqueAccountNumber;
+
+				NewAccount.DispatchDetails();
 
 				Console.WriteLine($"Account Created! Details will be provided via Email to {NewAccount.Email}");
 
-				int UniqueAccountNumber = AccountParser.Unique;
 				Console.WriteLine($"\n\nYour account number is: {UniqueAccountNumber}");
 
 				string FirstName = $"First Name|{NewAccount.FirstName}";
 				string LastName = $"Last Name|{NewAccount.LastName}";
 				string Address = $"Address|{NewAccount.Address}";
 				string Phone = $"Phone|{NewAccount.PhoneNumber}";
-				string Email = $"Email|{NewAccount.Email}";
+				string EmailAddress = $"Email|{NewAccount.Email}";
 				string AccountNumber = $"AccountNo|{UniqueAccountNumber}";
 				string Balance = "Balance|0"; // Begin is zero Balance.
 
@@ -174,7 +170,7 @@ namespace BankManagementSystem
 					LastName,
 					Address,
 					Phone,
-					Email,
+					EmailAddress,
 					AccountNumber,
 					Balance
 				);

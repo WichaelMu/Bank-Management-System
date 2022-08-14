@@ -41,7 +41,7 @@ namespace BankManagementSystem.Core
 					// Check if the file is configured in the format: <Username>|<Password>
 					if (UsernameAndPassword.Length != 2)
 						Print("Login Details has no Username or Password for " + Credential, ConsoleColor.Red);
-					
+
 					// Check there are no duplicates in the Login Credential file.
 					if (Logins.ContainsKey(UsernameAndPassword[0]))
 						Print("Duplicate Key Found! Login failed checks for: " + Credential, ConsoleColor.Red);
@@ -53,7 +53,7 @@ namespace BankManagementSystem.Core
 					// Prevent adding anything if any checks above failed.
 					if (UsernameAndPassword.Length == 2)
 #endif // WITH_ERROR_CHECKS
-					Logins.Add(UsernameAndPassword[0], UsernameAndPassword[1]);
+						Logins.Add(UsernameAndPassword[0], UsernameAndPassword[1]);
 				}
 
 				return Logins;

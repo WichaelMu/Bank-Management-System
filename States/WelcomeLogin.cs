@@ -57,16 +57,16 @@ namespace BankManagementSystem
 			PrintWithBorder(HorizontalBorder);
 
 #if WITH_CREDITS
-			Console.WriteLine("\n\n");
+                        Console.WriteLine("\n\n");
 
-			const string kAuthorTitle = "Application Development with .NET";
-			const string kName = "Written by: Michael Wu";
+                        const string kAuthorTitle = "Application Development with .NET";
+                        const string kName = "Written by: Michael Wu";
 
-			AutoCentre(kAuthorTitle, CharacterLimit, out int ADNETPadding);
-			AutoCentre(kName, CharacterLimit, out int MWPadding);
+                        AutoCentre(kAuthorTitle, CharacterLimit, out int ADNETPadding);
+                        AutoCentre(kName, CharacterLimit, out int MWPadding);
 
-			PrintWithBorder(kAuthorTitle, ADNETPadding, Border: ' ');
-			PrintWithBorder(kName, MWPadding, Border: ' ');
+                        PrintWithBorder(kAuthorTitle, ADNETPadding, Border: ' ');
+                        PrintWithBorder(kName, MWPadding, Border: ' ');
 #endif
 		}
 

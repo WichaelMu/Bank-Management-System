@@ -3,7 +3,7 @@
 /* -- Pre-processor Directives. -- */
 
 // Whether or not to actually send Emails, or a stub debug printing.
-//#define WITH_EMAIL
+#define WITH_EMAIL
 // Whether or not to show Email Send Completion Messages/Results.
 #define WITH_EMAIL_SEND_RESULTS
 

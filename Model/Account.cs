@@ -55,7 +55,7 @@ namespace BankManagementSystem.Core
 			// If the above three conditions are met, the Email Address is considered valid.
 			if (bValidEmailAddress && bValidDomain && bValidEmailPrefix)
 				return EValidationResult.Passed;
-			
+
 			// Byte gives us eight different errors.
 			byte Result = 0;
 
@@ -157,6 +157,6 @@ namespace BankManagementSystem.Core
 			IO.Email.Dispatch(Email, EmailMessage.ToString(), Subject);
 		}
 
-		public static implicit operator bool (Account Account) => Account != null;
+		public static implicit operator bool(Account Account) => Account != null;
 	}
 }

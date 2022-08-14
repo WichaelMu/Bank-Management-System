@@ -59,6 +59,7 @@ namespace BankManagementSystem
 					RunDepositSequence();
 					break;
 				case D4: // Withdraw.
+					RunWithdrawSequence();
 					break;
 				case D5: // A/C Statement.
 					break;

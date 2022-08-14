@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using BankManagementSystem.Core;
 using BankManagementSystem.IO;
 using static BankManagementSystem.IO.OutputHelpers;
@@ -7,19 +8,19 @@ namespace BankManagementSystem
 {
 	public partial class BMS
 	{
-		void RunDepositSequence()
+		void RunWithdrawSequence()
 		{
 			Console.Clear();
 
-			PrintDepositPrompts();
-			ReceiveDepositInput();
+			PrintWithdrawPrompts();
+			ReceiveWithdrawInputs();
 
 			RunMainMenuSequence();
 		}
 
-		void PrintDepositPrompts()
+		void PrintWithdrawPrompts()
 		{
-			const string kDepositTitle = "DEPOSIT";
+			const string kDepositTitle = "WITHDRAW";
 
 			const string kAccountNumberPrompt = "Account Number: ";
 			const string kAmount = "Amount: $";
@@ -40,7 +41,7 @@ namespace BankManagementSystem
 			PrintWithBorder(HorizontalBorder);
 		}
 
-		void ReceiveDepositInput()
+		void ReceiveWithdrawInputs()
 		{
 			Console.SetCursorPosition(21, 5);
 
@@ -87,6 +88,8 @@ namespace BankManagementSystem
 			int Amount;
 			string AmountAsString = string.Empty;
 			Account FromID = AccountParser.ConstructFromFile(AccountNumber);
+			char LastChar = FromID.FirstName[FromID.FirstName.Length - 1];
+			string ApostropheSuffix = LastChar == 'S' || LastChar == 's' ? " " : "s ";
 
 			do
 			{
@@ -98,6 +101,10 @@ namespace BankManagementSystem
 					// 1 << 31 is already 10 digits. Prevent overflow.
 					Console.WriteLine("Account Numbers do not exceed 10 digits!");
 				}
+				else if (int.TryParse(AmountAsString, out int TriedAmount) && FromID.Balance < TriedAmount)
+				{
+					Console.WriteLine($"{FromID.FirstName}'{ApostropheSuffix}Account does not have enough balance!");
+				}
 
 				// Set the position to the end of the Account Number.
 				Console.SetCursorPosition(14 + AmountAsString.Length, 6);
@@ -108,19 +115,17 @@ namespace BankManagementSystem
 
 				AmountAsString = Input.String();
 			}
-			// If the Input is NaN, loop.
-			while (!int.TryParse(AmountAsString, out Amount));
+			// If the Input is NaN or the Account does not have enough Balance, loop.
+			while (!int.TryParse(AmountAsString, out Amount) || FromID.Balance < Amount);
 
 			// Update and Write Account to file.
-			FromID.Balance += Amount;
-			FromID.Transfers.Add(new Transfer(FormatDate(), ETransferType.Deposit, Amount, FromID.Balance));
+			FromID.Balance -= Amount;
+			FromID.Transfers.Add(new Transfer(FormatDate(), ETransferType.Withdraw, Amount, FromID.Balance));
 			FromID.Write();
 
 			Console.SetCursorPosition(0, 9);
 
-			char LastChar = FromID.FirstName[FromID.FirstName.Length - 1];
-			string ApostropheSuffix = LastChar == 'S' || LastChar == 's' ? " " : "s ";
-			Console.WriteLine($"Successfully Deposited ${Amount} into {FromID.FirstName}'{ApostropheSuffix}Account!");
+			Console.WriteLine($"Successfully Withdrew ${Amount} from {FromID.FirstName}'{ApostropheSuffix}Account!");
 
 			Console.WriteLine("\nPress any key to return to the Main Menu...");
 			Input.Any();

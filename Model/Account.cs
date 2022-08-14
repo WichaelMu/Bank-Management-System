@@ -92,18 +92,47 @@ namespace BankManagementSystem.Core
 				await FileSystem.WriteToFile(FileSystem.kDirectory, ID.ToString() + ".txt", EWriteMode.Append, Encoding.UTF8, T.ToString());
 		}
 
-		public void DispatchDetails()
+		public void Dispatch(bool bIsStatement = false)
 		{
 			StringBuilder EmailMessage = new StringBuilder();
+
+			EmailMessage.Append(bIsStatement
+				? "<h1>Your Account Statement</h1>"
+				: "<h1>Your New Bank Account Details</h1>"
+			);
+
 			EmailMessage
-			.Append("<h1>Your New Bank Account Details</h1><br>")
-			.Append($"<h2>Your Account Number: {ID}</h2><br>")
+			.Append($"<h2>Your Account Number: {ID}</h2>")
 			.Append($"First Name: {FirstName}<br>")
 			.Append($"Last Name: {LastName}<br>")
 			.Append($"Address: {Address}<br>")
-			.Append($"Current Balance: {Balance}");
+			.Append($"Current Balance: {Balance:C0}");
 
-			IO.Email.Dispatch(Email, EmailMessage.ToString());
+			if (bIsStatement && Transfers.Count != 0)
+			{
+				EmailMessage.Append("<br><br>");
+				EmailMessage
+				.Append("<table style=\"width:100%\">")
+				.Append("<tr>")
+				.Append("<th>Date</th>")
+				.Append("<th>Type</th>")
+				.Append("<th>Amount</th>")
+				.Append("</tr>");
+
+				foreach (Transfer Transfer in Transfers)
+					EmailMessage
+					.Append("<tr><td>")
+					.Append(Transfer.Date)
+					.Append("</td><td>")
+					.Append(Transfer.Type)
+					.Append("</td><td>")
+					.Append(Transfer.Amount.ToString("C0"))
+					.Append("</td></tr>");
+
+				EmailMessage.Append("</table>");
+			}
+
+			IO.Email.Dispatch(Email, EmailMessage.ToString(), "Your Account Statement");
 		}
 	}
 }

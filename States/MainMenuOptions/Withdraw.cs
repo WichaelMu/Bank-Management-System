@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using BankManagementSystem.Core;
 using BankManagementSystem.IO;
 using static BankManagementSystem.IO.OutputHelpers;
@@ -20,12 +19,12 @@ namespace BankManagementSystem
 
 		void PrintWithdrawPrompts()
 		{
-			const string kDepositTitle = "WITHDRAW";
+			const string kWithdrawTitle = "WITHDRAW";
 
 			const string kAccountNumberPrompt = "Account Number: ";
 			const string kAmount = "Amount: $";
 
-			PrintTitle(kDepositTitle);
+			PrintTitle(kWithdrawTitle);
 
 			AutoCentre(kPrompt, CharacterLimit, out int PromptPadding);
 

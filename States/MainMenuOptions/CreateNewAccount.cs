@@ -151,7 +151,7 @@ namespace BankManagementSystem
 				int UniqueAccountNumber = AccountParser.Unique;
 				NewAccount.ID = UniqueAccountNumber;
 
-				NewAccount.DispatchDetails();
+				NewAccount.Dispatch();
 
 				Console.WriteLine($"Account Created! Details will be provided via Email to {NewAccount.Email}");
 
@@ -163,7 +163,7 @@ namespace BankManagementSystem
 				string Phone = $"Phone|{NewAccount.PhoneNumber}";
 				string EmailAddress = $"Email|{NewAccount.Email}";
 				string AccountNumber = $"AccountNo|{UniqueAccountNumber}";
-				string Balance = "Balance|0"; // Begin is zero Balance.
+				string Balance = $"Balance|{0:C0}"; // Begin with zero Balance.
 
 				await FileSystem.WriteToFile(FileSystem.kDirectory, UniqueAccountNumber.ToString() + ".txt", EWriteMode.Overwrite, Encoding.UTF8,
 					FirstName,

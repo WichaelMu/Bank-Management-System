@@ -62,6 +62,7 @@ namespace BankManagementSystem
 					RunWithdrawSequence();
 					break;
 				case D5: // A/C Statement.
+					RunStatmentSequence();
 					break;
 				case D6: // Delete account.
 					break;

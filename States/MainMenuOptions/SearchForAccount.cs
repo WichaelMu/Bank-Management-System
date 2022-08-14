@@ -108,7 +108,7 @@ namespace BankManagementSystem
 
 			// Field constants.
 			const string kAccountNo = "Account No: ";
-			const string kBalance = "Account Balance: $";
+			const string kBalance = "Account Balance: ";
 			const string kFirstName = "First Name: ";
 			const string kLastName = "Last Name: ";
 			const string kAddress = "Address: ";
@@ -119,7 +119,7 @@ namespace BankManagementSystem
 
 			// Build fields with information.
 			string AccountNo = $"{kAccountNo}{ID}";
-			string AccountBalance = $"{kBalance}{FromID.Balance}";
+			string AccountBalance = $"{kBalance}{FromID.Balance.ToString("C0")}";
 			string FirstName = $"{kFirstName}{FromID.FirstName}";
 			string LastName = $"{kLastName}{FromID.LastName}";
 			string Address = $"{kAddress}{FromID.Address}";

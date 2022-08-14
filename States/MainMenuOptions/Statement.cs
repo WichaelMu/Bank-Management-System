@@ -53,23 +53,23 @@ namespace BankManagementSystem
 
 			do
 			{
-				Console.SetCursorPosition(0, 9);
+				Console.SetCursorPosition(0, 8);
 
 				bool bInputWasEmpty = !string.IsNullOrEmpty(IntAsString);
 
 				// Cannot exceed a length of 10.
 				if (IntAsString.Length > 10)
 				{
-					Console.WriteLine("Account Numbers do not exceed 8 digits!                               ");
+					Print("Account Numbers do not exceed 8 digits!", ConsoleColor.Red);
 				}
 				else if (int.TryParse(IntAsString, out _) && !SearchAccountID(IntAsString))
 				{
-					Console.WriteLine($"Account Number {IntAsString} does not exist!                         ");
+					Print($"Account Number {IntAsString} does not exist!", ConsoleColor.Red);
 				}
 				// If not empty and is executed, then it has previously failed with letters.
 				else if (bInputWasEmpty)
 				{
-					Console.WriteLine("Account Numbers can only have numbers! Use 'x' to Cancel.");
+					Print("Account Numbers can only have numbers! Use 'x' to Cancel.", ConsoleColor.Red);
 				}
 
 				// Set the position to the end of the Account Number.
@@ -138,13 +138,13 @@ namespace BankManagementSystem
 		bool ReceiveEmailInput()
 		{
 			Console.SetCursorPosition(0, 14);
-			Console.WriteLine("Email Account Statment (y/n)?");
+			Print("Email Account Statment (y/n)?");
 
 			Input.Char(out char Key);
 			while (Key != 'Y' && Key != 'y' && Key != 'N' && Key != 'n')
 			{
 				Console.SetCursorPosition(0, 14);
-				Console.Write("Invalid Response. Valid inputs are (Y/N) or (y/n)\nIs the above information correct? ");
+				Print("Invalid Response. Valid inputs are (Y/N) or (y/n)\nIs the above information correct? ", ConsoleColor.Red);
 				Input.Char(out Key);
 			}
 

@@ -117,10 +117,11 @@ namespace BankManagementSystem.Core
 		{
 			StringBuilder EmailMessage = new StringBuilder();
 
-			EmailMessage.Append(bIsStatement
-				? "<h1>Your Account Statement</h1>"
-				: "<h1>Your New Bank Account Details</h1>"
-			);
+			string Subject = bIsStatement
+				? "Your Account Statement"
+				: "Your New Bank Account Details";
+
+			EmailMessage.Append($"<h1>{Subject}</h1>");
 
 			EmailMessage
 			.Append($"<h2>Your Account Number: {ID}</h2>")
@@ -153,7 +154,7 @@ namespace BankManagementSystem.Core
 				EmailMessage.Append("</table>");
 			}
 
-			IO.Email.Dispatch(Email, EmailMessage.ToString(), Subject: "Your Account Statement");
+			IO.Email.Dispatch(Email, EmailMessage.ToString(), Subject);
 		}
 
 		public static implicit operator bool (Account Account) => Account != null;

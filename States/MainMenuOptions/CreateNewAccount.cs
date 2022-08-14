@@ -100,11 +100,11 @@ namespace BankManagementSystem
 				// Cannot exceed a length of 10.
 				if (IntAsString.Length > 10)
 				{
-					Console.WriteLine("Phone Numbers do not exceed 10 digits!");
+					Print("Phone Numbers do not exceed 10 digits!", ConsoleColor.Red);
 				}
 				else if (!string.IsNullOrEmpty(IntAsString))
 				{
-					Console.WriteLine("Phone Numbers can only have numbers!  ");
+					Print("Phone Numbers can only have numbers!", ConsoleColor.Red);
 				}
 
 				// Set the position to the end of the phone number.
@@ -140,23 +140,25 @@ namespace BankManagementSystem
 				// Print failed messages.
 
 				if ((ValidationResult & EValidationResult.FieldsEmpty) == EValidationResult.FieldsEmpty)
-					Console.WriteLine("One or more fields were empty!              ");
+					Print("One or more fields were empty!", ConsoleColor.Red);
 				if ((ValidationResult & EValidationResult.NoAtSymbol) == EValidationResult.NoAtSymbol)
-					Console.WriteLine("Invalid Email Address! No '@' symbol.       ");
+					Print("Invalid Email Address! No '@' symbol.", ConsoleColor.Red);
 				if ((ValidationResult & EValidationResult.TooManyAtSymbols) == EValidationResult.TooManyAtSymbols)
-					Console.WriteLine("Invalid Email Address! Too many '@' symbols.");
+					Print("Invalid Email Address! Too many '@' symbols.", ConsoleColor.Red);
 				if ((ValidationResult & EValidationResult.InvalidDomain) == EValidationResult.InvalidDomain)
-					Console.WriteLine("Invalid Email Address Domain!                     " +
+					Print("Invalid Email Address Domain!" +
 								"\n\tValid Domains are:" +
 								"\n\t- @gmail.com" +
 								"\n\t- @outlook.com" +
 								"\n\t- @student.uts.edu.au" +
-								"\n\t- @uts.edu.au");
+								"\n\t- @uts.edu.au", ConsoleColor.Red);
 				if ((ValidationResult & EValidationResult.IllegalEmailAddress) == EValidationResult.IllegalEmailAddress)
-					Console.WriteLine("Invalid Email Address!");
+					Print("Invalid Email Address!", ConsoleColor.Red);
+
+				ResetColours();
 
 				// Prompt for retry or cancellation.
-				Console.WriteLine("\nPress any key to retry or 'x' to cancel...");
+				Print("\nPress any key to retry or 'x' to cancel...");
 
 				Input.Char(out char Keystroke);
 
@@ -181,13 +183,13 @@ namespace BankManagementSystem
 		/// <returns>True if the information is correct.</returns>
 		bool ConfirmNewAccount()
 		{
-			Console.WriteLine("Is the above information correct (y/n)?");
+			Print("Is the above information correct (y/n)?");
 
 			Input.Char(out char Key);
 			while (Key != 'Y' && Key != 'y' && Key != 'N' && Key != 'n')
 			{
 				Console.SetCursorPosition(0, 12);
-				Console.Write("Invalid Response. Valid inputs are (Y/N) or (y/n)\nIs the above information correct? ");
+				Print("Invalid Response. Valid inputs are (Y/N) or (y/n)\nIs the above information correct? ", ConsoleColor.Red);
 				Input.Char(out Key);
 			}
 
@@ -197,6 +199,8 @@ namespace BankManagementSystem
 		/// <summary>Writes a New Account into a new file.</summary>
 		async void RegisterNewAccount(Account NewAccount)
 		{
+			Console.SetCursorPosition(0, 12);
+
 			// Get a unique ID.
 			int UniqueAccountNumber = AccountParser.Unique;
 			NewAccount.ID = UniqueAccountNumber;
@@ -204,9 +208,9 @@ namespace BankManagementSystem
 			// Send an Email.
 			NewAccount.Dispatch();
 
-			Console.WriteLine($"Account Created! Details will be provided via Email to {NewAccount.Email}");
+			Print($"Account Created! Details will be provided via Email to {NewAccount.Email}", ConsoleColor.Green);
 
-			Console.WriteLine($"\n\nYour account number is: {UniqueAccountNumber}");
+			Print($"\n\nYour account number is: {UniqueAccountNumber}", ConsoleColor.Green);
 
 			string FirstName = $"First Name|{NewAccount.FirstName}";
 			string LastName = $"Last Name|{NewAccount.LastName}";

@@ -15,8 +15,12 @@ namespace BankManagementSystem
 			Console.Clear();
 
 			PrintLoginScreen();
+
+			// Read and parse the login information here as early warnings of misconfigred logins.
+			Dictionary<string, string> Logins = AccountParser.ReadLogins();
+
 			ReceiveLoginInput(out string Username, out string Password);
-			ValidateLoginCredentials(Username, Password);
+			ValidateLoginCredentials(Logins, Username, Password);
 
 			RunMainMenuSequence();
 		}
@@ -112,9 +116,8 @@ namespace BankManagementSystem
 		/// Checks whether <paramref name="Username"/> exists in a file with the
 		/// corresponding <paramref name="Password"/>.
 		/// </summary>
-		void ValidateLoginCredentials(string Username, string Password)
+		void ValidateLoginCredentials(Dictionary<string, string> Logins, string Username, string Password)
 		{
-			Dictionary<string, string> Logins = AccountParser.ReadLogins();
 			bool bUsernameExists = Logins.ContainsKey(Username);
 			bool bLoginMatches = bUsernameExists && Logins[Username] == Password;
 
@@ -124,10 +127,10 @@ namespace BankManagementSystem
 
 				PrintLoginScreen();
 				Console.WriteLine();
-				Console.WriteLine("Incorrect Username or Password! Please try again...");
+				Print("Incorrect Username or Password! Please try again...", ConsoleColor.Red);
 
 				ReceiveLoginInput(out Username, out Password);
-				ValidateLoginCredentials(Username, Password);
+				ValidateLoginCredentials(Logins, Username, Password);
 			}
 		}
 	}

@@ -48,12 +48,12 @@ namespace BankManagementSystem
 				// Cannot exceed a length of 10.
 				if (IntAsString.Length > 10)
 				{
-					Console.WriteLine("Account Numbers do not exceed 8 digits!");
+					Print("Account Numbers do not exceed 8 digits!", ConsoleColor.Red);
 				}
 				// If not empty and is executed, then it has previously failed with letters.
 				else if (!string.IsNullOrEmpty(IntAsString))
 				{
-					Console.WriteLine("Account Numbers can only have numbers! ");
+					Print("Account Numbers can only have numbers!", ConsoleColor.Red);
 				}
 
 				// Set the position to the end of the Account Number.
@@ -72,7 +72,7 @@ namespace BankManagementSystem
 
 			if (!SearchAccountID(IntAsString))
 			{
-				Console.WriteLine($"Account Number {IntAsString} does not exist!        ");
+				Print($"Account Number {IntAsString} does not exist!", ConsoleColor.Yellow);
 
 				RequestCheckAnother(false);
 				return false;
@@ -80,7 +80,7 @@ namespace BankManagementSystem
 			else
 			{
 				Console.Clear();
-				Console.WriteLine("Account found!                         ");
+				Print("Account found!", ConsoleColor.Green);
 				PrintAccount(AccountNumber);
 				return true;
 			}
@@ -158,7 +158,7 @@ namespace BankManagementSystem
 		/// <summary>Ask the user whether or not to search for another <see cref="Account"/>.</summary>
 		void RequestCheckAnother(bool bHasAccountAlreadyOnScreen)
 		{
-			Console.Write("\nCheck another account (y/n)? ");
+			Print("\nCheck another account (y/n)? ");
 
 			Input.Char(out char Key);
 			while (Key != 'Y' && Key != 'y' && Key != 'N' && Key != 'n')
@@ -168,7 +168,8 @@ namespace BankManagementSystem
 					: 8
 				);
 
-				Console.Write("Invalid Response. Valid inputs are (Y/N) or (y/n)\nDo you want to check another account? ");
+				Print("Invalid Response. Valid inputs are (Y/N) or (y/n)\nDo you want to check another account? ", ConsoleColor.Red);
+				ClearLine();
 				Input.Char(out Key);
 			}
 

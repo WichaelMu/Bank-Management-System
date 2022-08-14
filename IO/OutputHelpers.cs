@@ -24,7 +24,7 @@ namespace BankManagementSystem.IO
 		{
 			if (LeftRightPadding == 0)
 			{
-				Console.WriteLine($"{Border}{Content}{Border}");
+				Print($"{Border}{Content}{Border}");
 			}
 			else
 			{
@@ -72,7 +72,7 @@ namespace BankManagementSystem.IO
 			 * Result: '|     Content     |'
 			 */
 
-			Console.WriteLine(SB.ToString());
+			Print(SB.ToString());
 		}
 
 		/// <summary>Prints a new line with borders.</summary>
@@ -109,12 +109,34 @@ namespace BankManagementSystem.IO
 			Result = CharacterLimit - Content.Length;
 		}
 
-		/// <summary>Prints <paramref name="Params"/> separated by a space.</summary>
-		/// <param name="Params">The <see cref="object"/>s to print.</param>
-		public static void Print(params object[] Params)
+		public static void SetColours(ConsoleColor FColour, ConsoleColor BColour = ConsoleColor.Black)
 		{
-			foreach (object O in Params)
-				Console.Write(O.ToString() + ' ');
+			Console.ForegroundColor = FColour;
+			Console.BackgroundColor = BColour;
+		}
+
+		public static void ResetColours()
+		{
+			SetColours(ConsoleColor.Gray);
+		}
+
+		public static void ClearLine()
+		{
+			Console.Write(new string(' ', BMS.CharacterLimit * 2));
+			Console.CursorLeft = 0;
+		}
+
+		public static void Print(string Content, ConsoleColor FColour = ConsoleColor.Gray, ConsoleColor BColour = ConsoleColor.Black)
+		{
+			// Set Colours.
+			SetColours(FColour, BColour);
+
+			// Clear line and Write Content.
+			ClearLine();
+			Console.WriteLine(Content);
+
+			// Revert to defaults.
+			ResetColours();
 		}
 
 		/// <summary>Prints a title with borders.</summary>

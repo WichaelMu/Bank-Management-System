@@ -29,7 +29,7 @@ namespace BankManagementSystem.IO
 			else
 			{
 				bool bContentIsOdd = Content.Length % 2 == 1;
-				PrintWithCustomPadding(Content, LeftRightPadding, LeftRightPadding - (bContentIsOdd ? 1 : 0), bWithBorder: true);
+				PrintWithCustomPadding(Content, LeftRightPadding, LeftRightPadding - (bContentIsOdd ? 1 : 0), bWithBorder: true, Border);
 			}
 		}
 

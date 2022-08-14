@@ -1,4 +1,6 @@
-﻿using System;
+﻿//#define WITH_CREDITS
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using BankManagementSystem.Core;
@@ -49,6 +51,19 @@ namespace BankManagementSystem
 
 			// Close Welcome/Login prompt border.
 			PrintWithBorder(HorizontalBorder);
+
+#if WITH_CREDITS
+			Console.WriteLine("\n\n");
+
+			const string kAuthorTitle = "Application Development with .NET";
+			const string kName = "Written by: Michael Wu";
+
+			AutoCentre(kAuthorTitle, CharacterLimit, out int ADNETPadding);
+			AutoCentre(kName, CharacterLimit, out int MWPadding);
+
+			PrintWithBorder(kAuthorTitle, ADNETPadding, Border: ' ');
+			PrintWithBorder(kName, MWPadding, Border: ' ');
+#endif
 		}
 
 		/// <summary>Reads Username/Password inputs.</summary>

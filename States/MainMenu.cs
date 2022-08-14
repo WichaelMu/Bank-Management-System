@@ -17,6 +17,8 @@ namespace BankManagementSystem
 
 		void PrintMainMenu()
 		{
+			// Map 0 to the prompt/choice input.
+			// Map 1 - 7 = The available choices.
 			string[] Prompts = new string[]
 			{
 				"Enter your choice (1-7):",
@@ -68,8 +70,9 @@ namespace BankManagementSystem
 					RunDeleteSequence();
 					break;
 				case D7: // Exit.
-					break;
+					return;
 				default: // Illegal Input.
+					ReceiveMainMenuInput();
 					break;
 			}
 		}

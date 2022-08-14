@@ -39,10 +39,4 @@ namespace BankManagementSystem.Core
 			return $"{Date}|{Type}|{Amount}|{Balance}";
 		}
 	}
-
-	/// <summary>Valid Transfer types.</summary>
-	public enum ETransferType
-	{
-		Deposit, Withdraw
-	}
 }

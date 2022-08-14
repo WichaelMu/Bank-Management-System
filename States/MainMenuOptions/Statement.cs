@@ -13,9 +13,12 @@ namespace BankManagementSystem
 
 			PrintStatementPrompt();
 			ReceiveStatementInput(out Account Account);
-			PrintAccountStatement(Account);
-			if (ReceiveEmailInput())
-				Account.Dispatch(true);
+			if (Account)
+			{
+				PrintAccountStatement(Account);
+				if (ReceiveEmailInput())
+					Account.Dispatch(true);
+			}
 
 			RunMainMenuSequence();
 		}
@@ -57,16 +60,16 @@ namespace BankManagementSystem
 				// Cannot exceed a length of 10.
 				if (IntAsString.Length > 10)
 				{
-					Console.WriteLine("Account Numbers do not exceed 8 digits!");
+					Console.WriteLine("Account Numbers do not exceed 8 digits!                               ");
 				}
 				else if (int.TryParse(IntAsString, out _) && !SearchAccountID(IntAsString))
 				{
-					Console.WriteLine($"Account Number {IntAsString} does not exist!        ");
+					Console.WriteLine($"Account Number {IntAsString} does not exist!                         ");
 				}
 				// If not empty and is executed, then it has previously failed with letters.
 				else if (bInputWasEmpty)
 				{
-					Console.WriteLine("Account Numbers can only have numbers! ");
+					Console.WriteLine("Account Numbers can only have numbers! Use 'x' to Cancel.");
 				}
 
 				// Set the position to the end of the Account Number.
@@ -77,6 +80,13 @@ namespace BankManagementSystem
 					Backspace();
 
 				IntAsString = Input.String();
+
+				// Cancel...
+				if (IntAsString == "x")
+				{
+					Account = null;
+					return;
+				}
 			}
 			// If the Input is NaN or is > 10, loop.
 			while (!int.TryParse(IntAsString, out AccountNumber) || IntAsString.Length > 10 || !SearchAccountID(AccountNumber));

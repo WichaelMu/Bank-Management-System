@@ -13,7 +13,10 @@ namespace BankManagementSystem
 
 			PrintDeletePrompt();
 			ReceiveDeleteInput(out Account Account);
-			ConfirmDelete(Account);
+
+			// If Cancelled, don't do anything.
+			if (Account)
+				ConfirmDelete(Account);
 
 			RunMainMenuSequence();
 		}
@@ -55,16 +58,16 @@ namespace BankManagementSystem
 				// Cannot exceed a length of 10.
 				if (IntAsString.Length > 10)
 				{
-					Console.WriteLine("Account Numbers do not exceed 8 digits!");
+					Console.WriteLine("Account Numbers do not exceed 8 digits!                                ");
 				}
 				else if (int.TryParse(IntAsString, out _) && !SearchAccountID(IntAsString))
 				{
-					Console.WriteLine($"Account Number {IntAsString} does not exist!        ");
+					Console.WriteLine($"Account Number {IntAsString} does not exist!                          ");
 				}
 				// If not empty and is executed, then it has previously failed with letters.
 				else if (bInputWasEmpty)
 				{
-					Console.WriteLine("Account Numbers can only have numbers! ");
+					Console.WriteLine("Account Numbers can only have numbers! Use 'x' to Cancel.");
 				}
 
 				// Set the position to the end of the Account Number.
@@ -74,7 +77,15 @@ namespace BankManagementSystem
 				for (int i = 0; i < IntAsString.Length; ++i)
 					Backspace();
 
+				// Re-enter Account Number.
 				IntAsString = Input.String();
+
+				// Cancel...
+				if (IntAsString == "x")
+				{
+					Account = null;
+					return;
+				}
 			}
 			// If the Input is NaN or is > 10, loop.
 			while (!int.TryParse(IntAsString, out AccountNumber) || IntAsString.Length > 10 || !SearchAccountID(AccountNumber));
@@ -92,6 +103,7 @@ namespace BankManagementSystem
 
 			string DecoratedName = AccountToDelete.GetDecoratedName();
 
+			// Prompt Yes/No to Delete.
 			Input.Char(out char Key);
 			while (Key != 'Y' && Key != 'y' && Key != 'N' && Key != 'n')
 			{
@@ -102,11 +114,13 @@ namespace BankManagementSystem
 
 			Console.SetCursorPosition(0, 14);
 
+			// Confirm Delete.
 			if (Key == 'Y' || Key == 'y')
 			{
 				FileSystem.DeleteAccount(AccountToDelete.ID);
 				Console.WriteLine($"{DecoratedName} Account was Deleted!                       ");
 			}
+			// Cancel Delete.
 			else
 			{
 				Console.WriteLine($"Did not Delete {DecoratedName} Account.                    ");

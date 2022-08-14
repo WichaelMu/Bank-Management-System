@@ -37,35 +37,47 @@ namespace BankManagementSystem.Core
 			if (FirstName.Length == 0 || LastName.Length == 0 || Address.Length == 0 || Email.Length == 0)
 				return EValidationResult.FieldsEmpty;
 
+			// Email Addresses only have one '@' symbol.
 			int NumberOfAtSymbols = Email.Count(Character => Character == '@');
 			bool bValidEmailAddress = NumberOfAtSymbols == 1;
 
+			// That one '@' symbol must be immediately before an Email domain.
+			// Use XOR. True if exactly one domain matches.
 			bool bValidDomain = Email.EndsWith("@gmail.com");
 			bValidDomain ^= Email.EndsWith("@outlook.com");
 			bValidDomain ^= Email.EndsWith("@student.uts.edu.au");
 			bValidDomain ^= Email.EndsWith("@uts.edu.au");
 
+			// An Email Address cannot begin with the '@' symbol.
+			// The first character of an Email Address must be a letter.
 			bool bValidEmailPrefix = !Email.StartsWith('@') && char.IsLetter(Email[0]);
 
+			// If the above three conditions are met, the Email Address is considered valid.
 			if (bValidEmailAddress && bValidDomain && bValidEmailPrefix)
 				return EValidationResult.Passed;
-
+			
+			// Byte gives us eight different errors.
 			byte Result = 0;
 
+			// Bitwise operations to consider multiple errors.
 			if (!bValidDomain)
 				Result |= (byte)EValidationResult.InvalidDomain;
 
+			// Check for either zero or too many '@' symbols.
 			if (!bValidEmailAddress)
 				Result |= NumberOfAtSymbols == 0
 					? (byte)EValidationResult.NoAtSymbol
 					: (byte)EValidationResult.TooManyAtSymbols;
 
+			// Check for an illegal Email Address.
 			if (!bValidEmailPrefix)
 				Result |= (byte)EValidationResult.IllegalEmailAddress;
 
+			// The result can be thought of as a byte -> EValidationResult conversion.
 			return (EValidationResult)Result;
 		}
 
+		/// <summary>Get's <see cref="FirstName"/> with the appropriate possessive apostrophe form.</summary>
 		public string GetDecoratedName()
 		{
 			char LastChar = FirstName[FirstName.Length - 1];
@@ -99,6 +111,8 @@ namespace BankManagementSystem.Core
 				await FileSystem.WriteToFile(FileSystem.kDirectory, ID.ToString() + ".txt", EWriteMode.Append, Encoding.UTF8, T.ToString());
 		}
 
+		/// <summary>This Account as an Email Message.</summary>
+		/// <param name="bIsStatement">Include Transfers?</param>
 		public void Dispatch(bool bIsStatement = false)
 		{
 			StringBuilder EmailMessage = new StringBuilder();
@@ -139,18 +153,9 @@ namespace BankManagementSystem.Core
 				EmailMessage.Append("</table>");
 			}
 
-			IO.Email.Dispatch(Email, EmailMessage.ToString(), "Your Account Statement");
+			IO.Email.Dispatch(Email, EmailMessage.ToString(), Subject: "Your Account Statement");
 		}
-	}
-}
 
-/// <summary>The result of an <see cref="Account"/>'s <see cref="Account.Validate"/>.</summary>
-public enum EValidationResult : byte
-{
-	Passed = 0,
-	NoAtSymbol = 1,
-	TooManyAtSymbols = 2,
-	InvalidDomain = 4,
-	IllegalEmailAddress = 8,
-	FieldsEmpty = 16
+		public static implicit operator bool (Account Account) => Account != null;
+	}
 }

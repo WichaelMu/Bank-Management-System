@@ -87,25 +87,17 @@ namespace BankManagementSystem.IO
 			return true;
 		}
 
+		/// <summary>Whether or not a file exists.</summary>
 		public static bool FileExists(string Path, string NameOfFile)
 		{
 			return File.Exists(Path + NameOfFile);
 		}
 
+		/// <summary>Deletes an Account, given an Account Number.</summary>
 		public static void DeleteAccount(int ID)
 		{
 			if (FileExists(kDirectory, ID + ".txt"))
 				File.Delete(kDirectory + ID + ".txt");
 		}
-	}
-
-
-	/// <summary>The behaviour in which to write to a file.</summary>
-	public enum EWriteMode
-	{
-		/// <summary>Append to the end of a file.</summary>
-		Append,
-		/// <summary>Make or write to a file, regardless of it's existing contents.</summary>
-		Overwrite
 	}
 }

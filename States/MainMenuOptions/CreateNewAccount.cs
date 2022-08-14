@@ -172,7 +172,7 @@ namespace BankManagementSystem
 			string Phone = $"Phone|{NewAccount.PhoneNumber}";
 			string EmailAddress = $"Email|{NewAccount.Email}";
 			string AccountNumber = $"AccountNo|{UniqueAccountNumber}";
-			string Balance = $"Balance|{0:C0}"; // Begin with zero Balance.
+			string Balance = $"Balance|0"; // Begin with zero Balance.
 
 			await FileSystem.WriteToFile(FileSystem.kDirectory, UniqueAccountNumber.ToString() + ".txt", EWriteMode.Overwrite, Encoding.UTF8,
 				FirstName,

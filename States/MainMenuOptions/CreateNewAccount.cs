@@ -15,9 +15,17 @@ namespace BankManagementSystem
 			PrintCreateNewAccount();
 			ReceiveAccountCreationInput(out Account NewAccount);
 			if (ValidateNewAccount(NewAccount))
-				ConfirmNewAccount(NewAccount);
-
-			RunMainMenuSequence();
+			{
+				if (ConfirmNewAccount(NewAccount))
+				{
+					RegisterNewAccount(NewAccount);
+					RunMainMenuSequence();
+				}
+				else
+				{
+					RunAccountCreationSequence();
+				}
+			}
 		}
 
 		void PrintCreateNewAccount()
@@ -128,16 +136,14 @@ namespace BankManagementSystem
 				RunAccountCreationSequence();
 				return false;
 			}
-			else
-			{
-				Console.WriteLine("Is the above information correct (y/n)?");
 
-				return true;
-			}
+			return true;
 		}
 
-		async void ConfirmNewAccount(Account NewAccount)
+		bool ConfirmNewAccount(Account NewAccount)
 		{
+			Console.WriteLine("Is the above information correct (y/n)?");
+
 			Input.Char(out char Key);
 			while (Key != 'Y' && Key != 'y' && Key != 'N' && Key != 'n')
 			{
@@ -146,42 +152,40 @@ namespace BankManagementSystem
 				Input.Char(out Key);
 			}
 
-			if (Key == 'Y' || Key == 'y')
-			{
-				int UniqueAccountNumber = AccountParser.Unique;
-				NewAccount.ID = UniqueAccountNumber;
+			return Key == 'Y' || Key == 'y';
+		}
 
-				NewAccount.Dispatch();
+		async void RegisterNewAccount(Account NewAccount)
+		{
+			int UniqueAccountNumber = AccountParser.Unique;
+			NewAccount.ID = UniqueAccountNumber;
 
-				Console.WriteLine($"Account Created! Details will be provided via Email to {NewAccount.Email}");
+			NewAccount.Dispatch();
 
-				Console.WriteLine($"\n\nYour account number is: {UniqueAccountNumber}");
+			Console.WriteLine($"Account Created! Details will be provided via Email to {NewAccount.Email}");
 
-				string FirstName = $"First Name|{NewAccount.FirstName}";
-				string LastName = $"Last Name|{NewAccount.LastName}";
-				string Address = $"Address|{NewAccount.Address}";
-				string Phone = $"Phone|{NewAccount.PhoneNumber}";
-				string EmailAddress = $"Email|{NewAccount.Email}";
-				string AccountNumber = $"AccountNo|{UniqueAccountNumber}";
-				string Balance = $"Balance|{0:C0}"; // Begin with zero Balance.
+			Console.WriteLine($"\n\nYour account number is: {UniqueAccountNumber}");
 
-				await FileSystem.WriteToFile(FileSystem.kDirectory, UniqueAccountNumber.ToString() + ".txt", EWriteMode.Overwrite, Encoding.UTF8,
-					FirstName,
-					LastName,
-					Address,
-					Phone,
-					EmailAddress,
-					AccountNumber,
-					Balance
-				);
+			string FirstName = $"First Name|{NewAccount.FirstName}";
+			string LastName = $"Last Name|{NewAccount.LastName}";
+			string Address = $"Address|{NewAccount.Address}";
+			string Phone = $"Phone|{NewAccount.PhoneNumber}";
+			string EmailAddress = $"Email|{NewAccount.Email}";
+			string AccountNumber = $"AccountNo|{UniqueAccountNumber}";
+			string Balance = $"Balance|{0:C0}"; // Begin with zero Balance.
 
-				Console.WriteLine("\nPress any key to return to the Main Menu...");
-				Input.Any();
-			}
-			else
-			{
-				RunAccountCreationSequence();
-			}
+			await FileSystem.WriteToFile(FileSystem.kDirectory, UniqueAccountNumber.ToString() + ".txt", EWriteMode.Overwrite, Encoding.UTF8,
+				FirstName,
+				LastName,
+				Address,
+				Phone,
+				EmailAddress,
+				AccountNumber,
+				Balance
+			);
+
+			Console.WriteLine("\nPress any key to return to the Main Menu...");
+			Input.Any();
 		}
 	}
 }

@@ -70,8 +70,25 @@ namespace BankManagementSystem
 					RunDeleteSequence();
 					break;
 				case D7: // Exit.
+					if (Email.IsAwaitingAsyncEmail())
+					{
+						Console.SetCursorPosition(0, 14);
+						Print("Cannot exit right now, we're still sending Emails!", ConsoleColor.Yellow);
+						ReceiveMainMenuInput();
+					}
+
 					return;
 				default: // Illegal Input.
+					Console.SetCursorPosition(0, 11);
+
+					const string kRetryInput = "Please Enter a Choice (1-7): ";
+
+					PaddingUntilEnd(kRetryInput, CharacterLimit, out int PromptPadding);
+
+					SetColours(ConsoleColor.Red);
+					PrintWithCustomPadding(kRetryInput, kTabSize, PromptPadding - 4);
+					ResetColours();
+
 					ReceiveMainMenuInput();
 					break;
 			}

@@ -23,6 +23,8 @@ namespace BankManagementSystem.IO
 	public static class Email
 	{
 #if WITH_EMAIL
+		static int EmailsRemainingToBeSent = 0;
+
 		/// <summary>Sends an Email to <paramref name="Receiver"/> saying <paramref name="Message"/>.</summary>
 		/// <param name="Receiver">The Email Address that Message will be sent to.</param>
 		/// <param name="Message">The contents that Receiver will read.</param>
@@ -60,10 +62,13 @@ namespace BankManagementSystem.IO
 			{
 				EmailMessage.Dispose();
 				Client.Dispose();
+
+				--EmailsRemainingToBeSent;
 			};
 
 			// Asynchronously send the Email with no Cancellation Token.
 			Client.SendAsync(EmailMessage, null);
+			++EmailsRemainingToBeSent;
 		}
 #else
 		public static void Dispatch(string Receiver, string Message, string Subject = "Your Bank Account", bool bBodyIsHTML = true) { Print($"Send Email to {Receiver} with Subject: {Subject}"); }
@@ -87,9 +92,18 @@ namespace BankManagementSystem.IO
 			// If the Email was successfully sent...
 			else
 			{
-				Print("Message sent.", ConsoleColor.Red);
+				Print("Message sent.", ConsoleColor.Green);
 			}
 		}
 #endif // WITH_EMAIL_SEND_RESULTS
+
+#if WITH_EMAIL
+		public static bool IsAwaitingAsyncEmail()
+		{
+			return EmailsRemainingToBeSent != 0;
+		}
+#else
+		public static bool IsAwaitingAsyncEmail() { return false; }
+#endif // WITH_EMAIL
 	}
 }

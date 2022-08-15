@@ -65,11 +65,11 @@ namespace BankManagementSystem
 			PrintNewLineWithBorder(CharacterLimit);
 
 			// Print prompt messages.
-			PrintWithCustomPadding(kFirstName, kTabSize, FNPadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(kLastName, kTabSize, LNPadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(kAddress, kTabSize, APadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(kPhoneNumber, kTabSize, PNPadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(kEmailAddress, kTabSize, EPadding - 4, bWithBorder: true);
+			PrintWithCustomPadding(kFirstName, kTabSize, FNPadding - 4);
+			PrintWithCustomPadding(kLastName, kTabSize, LNPadding - 4);
+			PrintWithCustomPadding(kAddress, kTabSize, APadding - 4);
+			PrintWithCustomPadding(kPhoneNumber, kTabSize, PNPadding - 4);
+			PrintWithCustomPadding(kEmailAddress, kTabSize, EPadding - 4);
 
 			// Ending border.
 			PrintWithBorder(HorizontalBorder);

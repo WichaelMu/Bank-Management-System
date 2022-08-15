@@ -38,7 +38,7 @@ namespace BankManagementSystem
 
 			PaddingUntilEnd(kAccountNumberPrompt, CharacterLimit, out int ANPadding);
 
-			PrintWithCustomPadding(kAccountNumberPrompt, kTabSize, ANPadding - 4, bWithBorder: true);
+			PrintWithCustomPadding(kAccountNumberPrompt, kTabSize, ANPadding - 4);
 
 			PrintWithBorder(HorizontalBorder);
 		}
@@ -124,13 +124,13 @@ namespace BankManagementSystem
 			PrintWithBorder(kStatementSubtitle, SubtitlePadding);
 			PrintNewLineWithBorder(CharacterLimit);
 
-			PrintWithCustomPadding(AccountNumber, kTabSize, ANPadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(AccountBalance, kTabSize, ABPadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(FirstName, kTabSize, FNPadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(LastName, kTabSize, LNPadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(Address, kTabSize, APadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(PhoneNumber, kTabSize, PNPadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(EmailAddress, kTabSize, EPadding - 4, bWithBorder: true);
+			PrintWithCustomPadding(AccountNumber, kTabSize, ANPadding - 4);
+			PrintWithCustomPadding(AccountBalance, kTabSize, ABPadding - 4);
+			PrintWithCustomPadding(FirstName, kTabSize, FNPadding - 4);
+			PrintWithCustomPadding(LastName, kTabSize, LNPadding - 4);
+			PrintWithCustomPadding(Address, kTabSize, APadding - 4);
+			PrintWithCustomPadding(PhoneNumber, kTabSize, PNPadding - 4);
+			PrintWithCustomPadding(EmailAddress, kTabSize, EPadding - 4);
 
 			PrintWithBorder(HorizontalBorder);
 		}

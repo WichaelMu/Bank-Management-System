@@ -50,8 +50,8 @@ namespace BankManagementSystem
 			PrintNewLineWithBorder(CharacterLimit);
 
 			// Prompt for Username and Password.
-			PrintWithCustomPadding(kUserNamePrompt, kTabSize, UserNamePromptPadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(kPasswordPrompt, kTabSize, PasswordPromptPadding - 4, bWithBorder: true);
+			PrintWithCustomPadding(kUserNamePrompt, kTabSize, UserNamePromptPadding - 4);
+			PrintWithCustomPadding(kPasswordPrompt, kTabSize, PasswordPromptPadding - 4);
 
 			// Close Welcome/Login prompt border.
 			PrintWithBorder(HorizontalBorder);

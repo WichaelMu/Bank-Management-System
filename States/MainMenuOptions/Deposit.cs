@@ -34,8 +34,8 @@ namespace BankManagementSystem
 			PaddingUntilEnd(kAccountNumberPrompt, CharacterLimit, out int ANPadding);
 			PaddingUntilEnd(kAmount, CharacterLimit, out int APadding);
 
-			PrintWithCustomPadding(kAccountNumberPrompt, kTabSize, ANPadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(kAmount, kTabSize, APadding - 4, bWithBorder: true);
+			PrintWithCustomPadding(kAccountNumberPrompt, kTabSize, ANPadding - 4);
+			PrintWithCustomPadding(kAmount, kTabSize, APadding - 4);
 
 			PrintWithBorder(HorizontalBorder);
 		}

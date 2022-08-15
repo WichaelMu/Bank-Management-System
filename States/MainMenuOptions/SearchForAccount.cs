@@ -29,7 +29,7 @@ namespace BankManagementSystem
 			PrintWithBorder(kPrompt, PromptPadding);
 			PrintNewLineWithBorder(CharacterLimit);
 
-			PrintWithCustomPadding(kAccountNumber, kTabSize, AccountNumberPadding - 4, bWithBorder: true);
+			PrintWithCustomPadding(kAccountNumber, kTabSize, AccountNumberPadding - 4);
 			PrintWithBorder(HorizontalBorder);
 		}
 
@@ -97,6 +97,7 @@ namespace BankManagementSystem
 		/// <inheritdoc cref="SearchAccountID(int)"/>
 		public bool SearchAccountID(string ID)
 		{
+			// An Account exists if we have a file associated with the given ID.
 			return FileSystem.FileExists(FileSystem.kDirectory, ID + ".txt");
 		}
 
@@ -143,13 +144,13 @@ namespace BankManagementSystem
 			PrintNewLineWithBorder(CharacterLimit);
 
 			// Write fields.
-			PrintWithCustomPadding(AccountNo, kTabSize, ANPadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(AccountBalance, kTabSize, ABPadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(FirstName, kTabSize, FNPadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(LastName, kTabSize, LNPadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(Address, kTabSize, APadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(Phone, kTabSize, PPadding - 4, bWithBorder: true);
-			PrintWithCustomPadding(Email, kTabSize, EPadding - 4, bWithBorder: true);
+			PrintWithCustomPadding(AccountNo, kTabSize, ANPadding - 4);
+			PrintWithCustomPadding(AccountBalance, kTabSize, ABPadding - 4);
+			PrintWithCustomPadding(FirstName, kTabSize, FNPadding - 4);
+			PrintWithCustomPadding(LastName, kTabSize, LNPadding - 4);
+			PrintWithCustomPadding(Address, kTabSize, APadding - 4);
+			PrintWithCustomPadding(Phone, kTabSize, PPadding - 4);
+			PrintWithCustomPadding(Email, kTabSize, EPadding - 4);
 
 			// Ending border.
 			PrintWithBorder(HorizontalBorder);

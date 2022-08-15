@@ -141,7 +141,10 @@ namespace BankManagementSystem.Core
 				.Append("<th>Amount</th>")
 				.Append("</tr>");
 
-				foreach (Transfer Transfer in Transfers)
+				for (int i = System.Math.Max(0, Transfers.Count - 5); i < Transfers.Count; ++i)
+				{
+					Transfer Transfer = Transfers[i];
+
 					EmailMessage
 					.Append("<tr><td>")
 					.Append(Transfer.Date)
@@ -150,6 +153,7 @@ namespace BankManagementSystem.Core
 					.Append("</td><td>")
 					.Append(Transfer.Amount.ToString("C0"))
 					.Append("</td></tr>");
+				}
 
 				EmailMessage.Append("</table>");
 			}

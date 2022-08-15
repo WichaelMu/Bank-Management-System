@@ -25,11 +25,11 @@ namespace BankManagementSystem
 
 		void PrintStatementPrompt()
 		{
-			const string kWithdrawTitle = "WITHDRAW";
+			const string kStatementTitle = "STATEMENT";
 
 			const string kAccountNumberPrompt = "Account Number: ";
 
-			PrintTitle(kWithdrawTitle);
+			PrintTitle(kStatementTitle);
 
 			AutoCentre(kPrompt, CharacterLimit, out int PromptPadding);
 

@@ -72,7 +72,7 @@ namespace BankManagementSystem.IO
 			 * Result: '|     Content     |'
 			 */
 
-			Print(SB.ToString());
+			Print(SB.ToString(), Console.ForegroundColor, Console.BackgroundColor);
 		}
 
 		/// <summary>Prints a new line with borders.</summary>

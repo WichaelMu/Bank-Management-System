@@ -128,6 +128,7 @@ namespace BankManagementSystem.Core
 			.Append($"First Name: {FirstName}<br>")
 			.Append($"Last Name: {LastName}<br>")
 			.Append($"Address: {Address}<br>")
+			.Append($"Phone Number: {PhoneNumber:D10}<br>")
 			.Append($"Current Balance: {Balance:C0}");
 
 			if (bIsStatement && Transfers.Count != 0)

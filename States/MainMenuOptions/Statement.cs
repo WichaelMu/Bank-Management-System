@@ -106,7 +106,7 @@ namespace BankManagementSystem
 			string FirstName = $"First Name: {Account.FirstName}";
 			string LastName = $"Last Name: {Account.LastName}";
 			string Address = $"Address: {Account.Address}";
-			string PhoneNumber = $"Phone: {Account.PhoneNumber}";
+			string PhoneNumber = $"Phone: {Account.PhoneNumber:D10}";
 			string EmailAddress = $"Email: {Account.Email}";
 
 			PrintTitle(kStatementTitle);

@@ -119,11 +119,11 @@ namespace BankManagementSystem
 
 			// Build fields with information.
 			string AccountNo = $"{kAccountNo}{ID}";
-			string AccountBalance = $"{kBalance}{FromID.Balance.ToString("C0")}";
+			string AccountBalance = $"{kBalance}{FromID.Balance:C0}";
 			string FirstName = $"{kFirstName}{FromID.FirstName}";
 			string LastName = $"{kLastName}{FromID.LastName}";
 			string Address = $"{kAddress}{FromID.Address}";
-			string Phone = $"{kPhone}{FromID.PhoneNumber}";
+			string Phone = $"{kPhone}{FromID.PhoneNumber:D10}";
 			string Email = $"{kEmail}{FromID.Email}";
 
 			// Align fields.

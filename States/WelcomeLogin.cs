@@ -57,16 +57,16 @@ namespace BankManagementSystem
 			PrintWithBorder(HorizontalBorder);
 
 #if WITH_CREDITS
-                        Console.WriteLine("\n\n");
+			Console.WriteLine("\n\n");
 
-                        const string kAuthorTitle = "Application Development with .NET";
-                        const string kName = "Written by: Michael Wu";
+			const string kAuthorTitle = "Application Development with .NET";
+			const string kName = "Written by: Michael Wu";
 
-                        AutoCentre(kAuthorTitle, CharacterLimit, out int ADNETPadding);
-                        AutoCentre(kName, CharacterLimit, out int MWPadding);
+			AutoCentre(kAuthorTitle, CharacterLimit, out int ADNETPadding);
+			AutoCentre(kName, CharacterLimit, out int MWPadding);
 
-                        PrintWithBorder(kAuthorTitle, ADNETPadding, Border: ' ');
-                        PrintWithBorder(kName, MWPadding, Border: ' ');
+			PrintWithBorder(kAuthorTitle, ADNETPadding, Border: ' ');
+			PrintWithBorder(kName, MWPadding, Border: ' ');
 #endif
 		}
 
@@ -77,9 +77,9 @@ namespace BankManagementSystem
 		{
 			// Prompt.Length + TabSize gets the end of the prompt. + 1 to include the left vertical border.
 
-			Console.SetCursorPosition(kUserNamePrompt.Length + kTabSize + 1, 5); // Position for Username input.
-			Username = Console.ReadLine();                                           // Read username.
-			Console.SetCursorPosition(kPasswordPrompt.Length + kTabSize + 1, 6); // Position for Password input.
+			Console.SetCursorPosition(kUserNamePrompt.Length + kTabSize + 1, 5);
+			Username = Console.ReadLine();
+			Console.SetCursorPosition(kPasswordPrompt.Length + kTabSize + 1, 6);
 
 			// Mask the Password input from the Console.
 			ConsoleKeyInfo Key;

@@ -3,9 +3,7 @@
 #define DUPLICATE_CHECKS
 #endif
 
-#if WITH_ERROR_CHECKS
 using System;
-#endif
 using System.Collections.Generic;
 using BankManagementSystem.IO;
 using static BankManagementSystem.IO.OutputHelpers;
@@ -55,6 +53,9 @@ namespace BankManagementSystem.Core
 #endif // WITH_ERROR_CHECKS
 						Logins.Add(UsernameAndPassword[0], UsernameAndPassword[1]);
 				}
+
+				if (Logins.Count == 0)
+					Print("There are no Login Credentials in login.txt!", ConsoleColor.Magenta);
 
 				return Logins;
 			}

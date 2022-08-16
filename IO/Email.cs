@@ -1,22 +1,28 @@
 ﻿
 
-/* -- Pre-processor Directives. -- */
+/* --                                          Pre-processor Directives.                                      -- */
+/* -- Used during debugging only, defines whether or not to disable sending Emails, to save Google API calls. -- */
 
 // Whether or not to actually send Emails, or a stub debug printing.
 #define WITH_EMAIL
+
+#if WITH_EMAIL
 // Whether or not to show Email Send Completion Messages/Results.
 #define WITH_EMAIL_SEND_RESULTS
+#endif
 
-using System;
-using System.ComponentModel;
 #if WITH_EMAIL
+#if WITH_EMAIL_SEND_RESULTS
+using System;
+#endif // WITH_EMAIL_SEND_RESULTS
+using System.ComponentModel;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
-#endif
-#if WITH_EMAIL_SEND_RESULTS
+#endif // WITH_EMAIL
+#if WITH_EMAIL_SEND_RESULTS || !WITH_EMAIL
 using static BankManagementSystem.IO.OutputHelpers;
-#endif
+#endif // WITH_EMAIL_SEND_RESULTS || !WITH_EMAIL
 
 namespace BankManagementSystem.IO
 {
@@ -56,7 +62,8 @@ namespace BankManagementSystem.IO
 #if WITH_EMAIL_SEND_RESULTS
 			// Notify on Email Sent.
 			Client.SendCompleted += Client_SendCompleted;
-#endif
+#endif // WITH_EMAIL_SEND_RESULTS
+
 			// Dispose the Email and SMTP Client once it has been sent.
 			Client.SendCompleted += (object Sender, AsyncCompletedEventArgs E) =>
 			{
@@ -70,34 +77,53 @@ namespace BankManagementSystem.IO
 			Client.SendAsync(EmailMessage, null);
 			++EmailsRemainingToBeSent;
 		}
-#else
+#else // !WITH_EMAIL
 		public static void Dispatch(string Receiver, string Message, string Subject = "Your Bank Account", bool bBodyIsHTML = true) { Print($"Send Email to {Receiver} with Subject: {Subject}"); }
 #endif // WITH_EMAIL
 
 #if WITH_EMAIL_SEND_RESULTS
+
+		static bool bShouldPrintResults = false;
+
 		/// <summary>Called once when the corresponding Email Address is sent.</summary>
 		/// <param name="Sender">The object that called this Event.</param>
 		/// <param name="Args">Async Event Arguments.</param>
 		static void Client_SendCompleted(object Sender, AsyncCompletedEventArgs Args)
 		{
-			string Token = (string)Args.UserState;
+			if (bShouldPrintResults)
+			{
+				string Token = (string)Args.UserState;
 
-			// If there was an error while sending an Email...
-			if (Args.Error != null)
-			{
-				SetColours(ConsoleColor.Red);
-				Console.WriteLine("[{0}] {1}", Token, Args.Error.ToString());
-				ResetColours();
-			}
-			// If the Email was successfully sent...
-			else
-			{
-				Print("Message sent.", ConsoleColor.Green);
+				// If there was an error while sending an Email...
+				if (Args.Error != null)
+				{
+					SetColours(ConsoleColor.Red);
+					Console.WriteLine("[{0}] {1}", Token, Args.Error.ToString());
+					ResetColours();
+				}
+				// If the Email was successfully sent...
+				else
+				{
+					Print("Message sent.", ConsoleColor.Green);
+				}
 			}
 		}
+
+		public static void SetAllowEmailSendResultsPrinting(bool bInAllow)
+		{
+			bShouldPrintResults = bInAllow;
+		}
+#else
+		public static void SetAllowEmailSendResultsPrinting(bool bInAllow) {  }
 #endif // WITH_EMAIL_SEND_RESULTS
 
 #if WITH_EMAIL
+		/// <summary>
+		/// Is this Program still waiting to either receive confirmation of a sent email?
+		/// <br><b>OR</b></br><br></br>
+		/// Is this Program still sending an Email?
+		/// </summary>
+		/// <returns><see langword="true"/> if this Program is waiting on, or still sending an Email.</returns>
 		public static bool IsAwaitingAsyncEmail()
 		{
 			return EmailsRemainingToBeSent != 0;

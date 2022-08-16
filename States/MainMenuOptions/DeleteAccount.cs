@@ -51,8 +51,6 @@ namespace BankManagementSystem
 			{
 				Console.SetCursorPosition(0, 8);
 
-				bool bInputWasEmpty = !string.IsNullOrEmpty(IntAsString);
-
 				// Cannot exceed a length of 10.
 				if (IntAsString.Length > 10)
 				{
@@ -62,8 +60,9 @@ namespace BankManagementSystem
 				{
 					Print($"Account Number {IntAsString} does not exist!", ConsoleColor.Red);
 				}
-				// If not empty and is executed, then it has previously failed with letters.
-				else if (bInputWasEmpty)
+				// If IntAsString is null or Empty, and it has reached this point, then we know
+				// this has looped more than once and IntAsString contains non-number characters.
+				else if (!string.IsNullOrEmpty(IntAsString))
 				{
 					Print("Account Numbers can only have numbers! Use 'x' to Cancel.", ConsoleColor.Red);
 				}

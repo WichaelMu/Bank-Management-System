@@ -1,17 +1,17 @@
 ﻿using System;
+using BankManagementSystem.IO;
 
 namespace BankManagementSystem
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static void Main()
 		{
 			// Bank Management System begins execution here...
-			BMS BankManagementSystem = new BMS();
-			BankManagementSystem.Execute();
+			new BMS().Execute();
 
 			// Bank Management System terminates here...
-			Console.WriteLine("Press Any Key to Terminate...");
+			OutputHelpers.Print("\nPress Any Key to Terminate...", ConsoleColor.Cyan);
 			Console.ReadKey();
 		}
 	}

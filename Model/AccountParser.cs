@@ -1,7 +1,8 @@
-﻿#if DEBUG
+﻿// Should we check for errors in login.txt when reading valid Login Credentials?
 #define WITH_ERROR_CHECKS
+
+// Should we check for duplicates?
 #define DUPLICATE_CHECKS
-#endif
 
 using System;
 using System.Collections.Generic;

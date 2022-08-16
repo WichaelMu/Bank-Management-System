@@ -20,6 +20,7 @@ namespace BankManagementSystem.Core
 		/// <summary>Gets the corresponding <see cref="ETransferType"/> from a string.</summary>
 		public static ETransferType GetType(string Type)
 		{
+			// There are only two options.
 			if (Type == "Deposit")
 				return ETransferType.Deposit;
 			return ETransferType.Withdraw;
@@ -36,6 +37,7 @@ namespace BankManagementSystem.Core
 		/// <summary>Construct a file-parse-able string from this Transfer.</summary>
 		public override string ToString()
 		{
+			// Sunday, 14 August 2022 13:23:30|Deposit|420|420
 			return $"{Date}|{Type}|{Amount}|{Balance}";
 		}
 	}

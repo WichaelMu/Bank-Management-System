@@ -50,10 +50,11 @@ namespace BankManagementSystem
 				{
 					Print("Account Numbers do not exceed 8 digits!", ConsoleColor.Red);
 				}
-				// If not empty and is executed, then it has previously failed with letters.
+				// If IntAsString is null or Empty, and it has reached this point, then we know
+				// this has looped more than once and IntAsString contains non-number characters.
 				else if (!string.IsNullOrEmpty(IntAsString))
 				{
-					Print("Account Numbers can only have numbers!", ConsoleColor.Red);
+					Print("Account Numbers can only have numbers! Use 'x' to Cancel.", ConsoleColor.Red);
 				}
 
 				// Set the position to the end of the Account Number.
@@ -64,11 +65,18 @@ namespace BankManagementSystem
 					Backspace();
 
 				IntAsString = Input.String();
+
+				if (IntAsString == "x" || IntAsString == "X")
+				{
+					return false;
+				}
 			}
 			// If the Input is NaN or is > 10, loop.
 			while (!int.TryParse(IntAsString, out AccountNumber) || IntAsString.Length > 10);
 
 			Console.SetCursorPosition(0, 8);
+			
+			// Look for the Account and print the relevant messages or information.
 
 			if (!SearchAccountID(IntAsString))
 			{
@@ -174,10 +182,12 @@ namespace BankManagementSystem
 				Input.Char(out Key);
 			}
 
+			// If the User wants to Search another Account, run this entire Sequence again.
 			if (Key == 'Y' || Key == 'y')
 			{
 				RunAccountSearchSequence();
 			}
+			// Otherwise, go back to the Main Menu.
 			else
 			{
 				RunMainMenuSequence();

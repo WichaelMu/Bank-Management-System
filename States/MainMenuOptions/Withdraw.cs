@@ -52,8 +52,6 @@ namespace BankManagementSystem
 			{
 				Console.SetCursorPosition(0, 9);
 
-				bool bInputWasEmpty = !string.IsNullOrEmpty(IntAsString);
-
 				// Cannot exceed a length of 10.
 				if (IntAsString.Length > 10)
 				{
@@ -63,8 +61,9 @@ namespace BankManagementSystem
 				{
 					Print($"Account Number {IntAsString} does not exist!", ConsoleColor.Red);
 				}
-				// If not empty and is executed, then it has previously failed with letters.
-				else if (bInputWasEmpty)
+				// If IntAsString is null or Empty, and it has reached this point, then we know
+				// this has looped more than once and IntAsString contains non-number characters.
+				else if (!string.IsNullOrEmpty(IntAsString))
 				{
 					Print("Account Numbers can only have numbers! Use 'x' to Cancel.", ConsoleColor.Red);
 				}
@@ -78,8 +77,10 @@ namespace BankManagementSystem
 
 				IntAsString = Input.String();
 
-				if (IntAsString == "x")
+				if (IntAsString == "x" || IntAsString == "X")
+				{
 					return;
+				}
 			}
 			// If the Input is NaN or is > 10, loop.
 			while (!int.TryParse(IntAsString, out AccountNumber) || IntAsString.Length > 10 || !SearchAccountID(AccountNumber));
@@ -102,17 +103,22 @@ namespace BankManagementSystem
 					// 1 << 31 is already 10 digits. Prevent overflow.
 					Print("Account Numbers do not exceed 10 digits!", ConsoleColor.Red);
 				}
+				// If AmountAsString IS a number.
 				else if (int.TryParse(AmountAsString, out int TriedAmount))
 				{
+					// If the Account doesn't have enough Balance.
 					if (FromID.Balance < TriedAmount)
 						Print($"{FromID.GetDecoratedName()} Account does not have enough balance!", ConsoleColor.Red);
 
+					// If the Amount is negative.
 					if (TriedAmount < 0)
 						Print("The Withdraw Amount must be non-negative!", ConsoleColor.Red);
 				}
+				// If AmountAsString is null or Empty, and it has reached this point, then we know
+				// this has looped more than once and AmountAsString contains non-number characters.
 				else if (!string.IsNullOrEmpty(AmountAsString))
 				{
-					Print("Enter the desired amount with numbers only!", ConsoleColor.Red);
+					Print("Enter the desired amount with numbers only! Use 'x' to Cancel.", ConsoleColor.Red);
 				}
 
 				// Set the position to the end of the Account Number.
@@ -123,12 +129,18 @@ namespace BankManagementSystem
 					Backspace();
 
 				AmountAsString = Input.String();
+
+				if (AmountAsString == "x" || AmountAsString == "X")
+				{
+					return;
+				}
 			}
 			// If the Input is NaN or the Account does not have enough Balance, loop.
 			while (!int.TryParse(AmountAsString, out Amount) || Amount < 0 || FromID.Balance < Amount);
 
 			Console.SetCursorPosition(0, 9);
 
+			// Withdrawing Amount from Account.
 			if (Amount != 0)
 			{
 				// Update and Write Account to file.
@@ -138,6 +150,7 @@ namespace BankManagementSystem
 
 				Print($"Successfully Withdrew ${Amount} from {FromID.GetDecoratedName()} Account!", ConsoleColor.Green);
 			}
+			// Withdrawing $0.00 does nothing.
 			else
 			{
 				Print($"A Withdraw of $0.00 was attempted! A Withdraw into {FromID.GetDecoratedName()} Account has been cancelled.", ConsoleColor.Yellow);

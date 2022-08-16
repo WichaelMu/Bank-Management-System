@@ -103,7 +103,8 @@ namespace BankManagementSystem
 				}
 
 			}
-			while (Key.Key != ConsoleKey.Enter); // Keep listening for Password input until 'Enter' is pressed.
+			// Keep listening for Password input until 'Enter' is pressed.
+			while (Key.Key != ConsoleKey.Enter);
 
 			// Construct Password input.
 			Password = PasswordBuilder.ToString();

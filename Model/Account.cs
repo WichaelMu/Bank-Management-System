@@ -57,6 +57,7 @@ namespace BankManagementSystem.Core
 				return EValidationResult.Passed;
 
 			// Byte gives us eight different errors.
+			// We can consider multiple fails with enums and bitwise operations.
 			byte Result = 0;
 
 			// Bitwise operations to consider multiple errors.
@@ -80,7 +81,8 @@ namespace BankManagementSystem.Core
 		/// <summary>Get's <see cref="FirstName"/> with the appropriate possessive apostrophe form.</summary>
 		public string GetDecoratedName()
 		{
-			char LastChar = FirstName[FirstName.Length - 1];
+			// Last element Index Operator.
+			char LastChar = FirstName[^1];
 			string ApostropheSuffix = LastChar == 'S' || LastChar == 's' ? "'" : "'s";
 			return FirstName + ApostropheSuffix;
 		}
@@ -88,6 +90,7 @@ namespace BankManagementSystem.Core
 		/// <summary>Updates this Account's file.</summary>
 		public async void Write()
 		{
+			// Interpolate the lines in the file.
 			string FirstName = $"First Name|{this.FirstName}";
 			string LastName = $"Last Name|{this.LastName}";
 			string Address = $"Address|{this.Address}";
@@ -96,6 +99,7 @@ namespace BankManagementSystem.Core
 			string AccountNumber = $"AccountNo|{ID}";
 			string Balance = $"Balance|{this.Balance}";
 
+			// Write the above to a new file.
 			await FileSystem.WriteToFile(FileSystem.kDirectory, ID.ToString() + ".txt", EWriteMode.Overwrite, Encoding.UTF8,
 				FirstName,
 				LastName,
@@ -106,7 +110,7 @@ namespace BankManagementSystem.Core
 				Balance
 			);
 
-			// Preserve Transfer information.
+			// Preserve Transfer information. Append to the above file.
 			foreach (Transfer T in Transfers)
 				await FileSystem.WriteToFile(FileSystem.kDirectory, ID.ToString() + ".txt", EWriteMode.Append, Encoding.UTF8, T.ToString());
 		}
@@ -115,14 +119,20 @@ namespace BankManagementSystem.Core
 		/// <param name="bIsStatement">Include Transfers?</param>
 		public void Dispatch(bool bIsStatement = false)
 		{
+			// Appending multiple strings. Use StringBuilder.
 			StringBuilder EmailMessage = new StringBuilder();
 
+			// Alter the Subject of this Email based on whether this Account
+			// is requesting an Account Statement.
 			string Subject = bIsStatement
 				? "Your Account Statement"
 				: "Your New Bank Account Details";
 
+			// HTML Heading 1 for the Subject.
 			EmailMessage.Append($"<h1>{Subject}</h1>");
 
+			// HTML Heading 2 for the Account Number.
+			// Simple HTML Text for everything else.
 			EmailMessage
 			.Append($"<h2>Your Account Number: {ID}</h2>")
 			.Append($"First Name: {FirstName}<br>")
@@ -131,8 +141,13 @@ namespace BankManagementSystem.Core
 			.Append($"Phone Number: {PhoneNumber:D10}<br>")
 			.Append($"Current Balance: {Balance:C0}");
 
+			// If we are requesting an Account Statement, include the Transfers.
+			// New Accounts will not request a Statement. New Accounts won't have
+			// any Transfers.
 			if (bIsStatement && Transfers.Count != 0)
 			{
+				// Table format the Transfers in the layout:
+				// Date | Type | Amount.
 				EmailMessage.Append("<br><br>");
 				EmailMessage
 				.Append("<table style=\"width:100%\">")
@@ -142,6 +157,7 @@ namespace BankManagementSystem.Core
 				.Append("<th>Amount</th>")
 				.Append("</tr>");
 
+				// Write the Transfers to the Email Message.
 				for (int i = System.Math.Max(0, Transfers.Count - 5); i < Transfers.Count; ++i)
 				{
 					Transfer Transfer = Transfers[i];
@@ -159,9 +175,12 @@ namespace BankManagementSystem.Core
 				EmailMessage.Append("</table>");
 			}
 
+			// Send this Email Message.
 			IO.Email.Dispatch(Email, EmailMessage.ToString(), Subject);
 		}
 
+		/// <summary>Implicit bool operator checking whether or not a given Account is null.</summary>
+		/// <param name="Account">The Account to check.</param>
 		public static implicit operator bool(Account Account) => Account != null;
 	}
 }

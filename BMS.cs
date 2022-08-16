@@ -26,13 +26,26 @@ namespace BankManagementSystem
 		{
 			// The width of the console; the border limits.
 			CharacterLimit = kWelcomeMessage.Length + kBorderLeftRightPadding * 2;
+
 			// The string holding an entire horizontal border separator.
 			HorizontalBorder = new string(kHorizontalBar, CharacterLimit);
 		}
 
+		/// <summary>Begins the Execution of the Bank Management System's Core Logic.</summary>
 		public void Execute()
 		{
+			// Here, you can individually test components.
+
+			// Default Component.
 			RunLoginSequence();
+
+			/* -- Other Components. -- */
+			//RunAccountCreationSequence();
+			//RunAccountSearchSequence();
+			//RunDepositSequence();
+			//RunWithdrawSequence();
+			//RunStatmentSequence();
+			//RunDeleteSequence();
 		}
 	}
 }

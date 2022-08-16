@@ -52,19 +52,19 @@ namespace BankManagementSystem
 			{
 				Console.SetCursorPosition(0, 9);
 
-				bool bInputWasEmpty = !string.IsNullOrEmpty(IntAsString);
-
 				// Cannot exceed a length of 10.
 				if (IntAsString.Length > 10)
 				{
 					Print("Account Numbers do not exceed 8 digits!", ConsoleColor.Red);
 				}
+				// If IntAsString IS a number, but we can't find a corresponding Account Number.
 				else if (int.TryParse(IntAsString, out _) && !SearchAccountID(IntAsString))
 				{
 					Print($"Account Number {IntAsString} does not exist!", ConsoleColor.Red);
 				}
-				// If not empty and is executed, then it has previously failed with letters.
-				else if (bInputWasEmpty)
+				// If IntAsString is null or Empty, and it has reached this point, then we know
+				// this has looped more than once and IntAsString contains non-number characters.
+				else if (!string.IsNullOrEmpty(IntAsString))
 				{
 					Print("Account Numbers can only have numbers! Use 'x' to Cancel.", ConsoleColor.Red);
 				}
@@ -79,7 +79,7 @@ namespace BankManagementSystem
 				IntAsString = Input.String();
 
 				// Cancel...
-				if (IntAsString == "x")
+				if (IntAsString == "x" || IntAsString == "X")
 				{
 					return;
 				}
@@ -103,13 +103,16 @@ namespace BankManagementSystem
 					// 1 << 31 is already 10 digits. Prevent overflow.
 					Print("Account Numbers do not exceed 10 digits!", ConsoleColor.Red);
 				}
+				// If AmountAsString IS a number, but the Amount is negative.
 				else if (int.TryParse(AmountAsString, out int TriedAmount) && TriedAmount < 0)
 				{
 					Print("A Deposit Amount must be non-negative!", ConsoleColor.Red);
 				}
+				// If AmountAsString is null or Empty, and it has reached this point, then we know
+				// this has looped more than once and AmountAsString contains non-number characters.
 				else if (!string.IsNullOrEmpty(AmountAsString))
 				{
-					Print("Enter the desired amount with numbers only!", ConsoleColor.Red);
+					Print("Enter the desired amount with numbers only! Use 'x' to Cancel.", ConsoleColor.Red);
 				}
 
 				// Set the position to the end of the Account Number.
@@ -120,12 +123,18 @@ namespace BankManagementSystem
 					Backspace();
 
 				AmountAsString = Input.String();
+
+				if (AmountAsString == "x" || AmountAsString == "X")
+				{
+					return;
+				}
 			}
 			// If the Input is NaN, loop.
 			while (!int.TryParse(AmountAsString, out Amount) || Amount < 0);
 
 			Console.SetCursorPosition(0, 9);
 
+			// Depositing Amount into Account.
 			if (Amount != 0)
 			{
 				// Update and Write Account to file.
@@ -135,6 +144,7 @@ namespace BankManagementSystem
 
 				Print($"Successfully Deposited ${Amount} into {FromID.GetDecoratedName()} Account!", ConsoleColor.Green);
 			}
+			// Depositing $0.00 does nothing.
 			else
 			{
 				Print($"A Deposit of $0.00 was attempted! A Deposit into {FromID.GetDecoratedName()} Account has been cancelled.", ConsoleColor.Yellow);

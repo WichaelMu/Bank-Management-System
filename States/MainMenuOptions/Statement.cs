@@ -55,19 +55,19 @@ namespace BankManagementSystem
 			{
 				Console.SetCursorPosition(0, 8);
 
-				bool bInputWasEmpty = !string.IsNullOrEmpty(IntAsString);
-
 				// Cannot exceed a length of 10.
 				if (IntAsString.Length > 10)
 				{
 					Print("Account Numbers do not exceed 8 digits!", ConsoleColor.Red);
 				}
+				// If IntAsString IS a number, but we can't find a corresponding Account Number.
 				else if (int.TryParse(IntAsString, out _) && !SearchAccountID(IntAsString))
 				{
 					Print($"Account Number {IntAsString} does not exist!", ConsoleColor.Red);
 				}
-				// If not empty and is executed, then it has previously failed with letters.
-				else if (bInputWasEmpty)
+				// If IntAsString is null or Empty, and it has reached this point, then we know
+				// this has looped more than once and IntAsString contains non-number characters.
+				else if (!string.IsNullOrEmpty(IntAsString))
 				{
 					Print("Account Numbers can only have numbers! Use 'x' to Cancel.", ConsoleColor.Red);
 				}
@@ -148,6 +148,7 @@ namespace BankManagementSystem
 				Input.Char(out Key);
 			}
 
+			// True if the User wants an Email of this Account's Statement.
 			return Key == 'Y' || Key == 'y';
 		}
 	}

@@ -76,7 +76,7 @@ namespace BankManagementSystem
 					RunDeleteSequence();
 					break;
 				case D7: // Exit.
-					// Do not exit the program once we have sent all pending Emails.
+					// Do not exit the program until we have sent all pending Emails.
 					if (Email.IsAwaitingAsyncEmail())
 					{
 						Console.SetCursorPosition(0, 14);

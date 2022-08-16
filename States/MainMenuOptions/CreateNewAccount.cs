@@ -102,6 +102,8 @@ namespace BankManagementSystem
 				{
 					Print("Phone Numbers do not exceed 10 digits!", ConsoleColor.Red);
 				}
+				// If IntAsString is null or Empty, and it has reached this point, then we know
+				// this has looped more than once and IntAsString contains non-number characters.
 				else if (!string.IsNullOrEmpty(IntAsString))
 				{
 					Print("Phone Numbers can only have numbers!", ConsoleColor.Red);
@@ -119,6 +121,7 @@ namespace BankManagementSystem
 			// If the Input is NaN or is > 10, loop.
 			while (!int.TryParse(IntAsString, out PhoneNumber) || IntAsString.Length > 10);
 
+			// Read the Email Address as is, we'll Validate it later.
 			Console.SetCursorPosition(12, 9);
 			string Email = Input.String();
 
@@ -132,12 +135,13 @@ namespace BankManagementSystem
 		{
 			Console.SetCursorPosition(0, 12);
 
+			// Validate the inputs from before.
 			EValidationResult ValidationResult = AccountToCheck.Validate();
 
 			// If the Account has not passed Validation checks.
 			if (ValidationResult != 0)
 			{
-				// Print failed messages.
+				// Print failed messages. We can consider multiple fails with enums and bitwise operations.
 
 				if ((ValidationResult & EValidationResult.FieldsEmpty) == EValidationResult.FieldsEmpty)
 					Print("One or more fields were empty!", ConsoleColor.Red);
@@ -155,15 +159,13 @@ namespace BankManagementSystem
 				if ((ValidationResult & EValidationResult.IllegalEmailAddress) == EValidationResult.IllegalEmailAddress)
 					Print("Invalid Email Address!", ConsoleColor.Red);
 
-				ResetColours();
-
 				// Prompt for retry or cancellation.
 				Print("\nPress any key to retry or 'x' to cancel...");
 
 				Input.Char(out char Keystroke);
 
 				// No cancel; retry...
-				if (Keystroke != 'x')
+				if (Keystroke != 'x' && Keystroke != 'X')
 				{
 					RunAccountCreationSequence();
 				}
@@ -197,7 +199,7 @@ namespace BankManagementSystem
 		}
 
 		/// <summary>Writes a New Account into a new file.</summary>
-		async void RegisterNewAccount(Account NewAccount)
+		void RegisterNewAccount(Account NewAccount)
 		{
 			Console.SetCursorPosition(0, 12);
 
@@ -212,24 +214,8 @@ namespace BankManagementSystem
 
 			Print($"\n\nYour account number is: {UniqueAccountNumber}", ConsoleColor.Green);
 
-			string FirstName = $"First Name|{NewAccount.FirstName}";
-			string LastName = $"Last Name|{NewAccount.LastName}";
-			string Address = $"Address|{NewAccount.Address}";
-			string Phone = $"Phone|{NewAccount.PhoneNumber}";
-			string EmailAddress = $"Email|{NewAccount.Email}";
-			string AccountNumber = $"AccountNo|{UniqueAccountNumber}";
-			string Balance = $"Balance|0"; // Begin with zero Balance.
-
-			// Write to file.
-			await FileSystem.WriteToFile(FileSystem.kDirectory, UniqueAccountNumber.ToString() + ".txt", EWriteMode.Overwrite, Encoding.UTF8,
-				FirstName,
-				LastName,
-				Address,
-				Phone,
-				EmailAddress,
-				AccountNumber,
-				Balance
-			);
+			// Write this new Account to its respective file.
+			NewAccount.Write();
 
 			Console.WriteLine("\nPress any key to return to the Main Menu...");
 			Input.Any();

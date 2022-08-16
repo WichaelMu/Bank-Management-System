@@ -118,6 +118,7 @@ namespace BankManagementSystem
 		/// </summary>
 		void ValidateLoginCredentials(Dictionary<string, string> Logins, string Username, string Password)
 		{
+			// If the Username is Correct and the associated Password along with it.
 			bool bUsernameExists = Logins.ContainsKey(Username);
 			bool bLoginMatches = bUsernameExists && Logins[Username] == Password;
 
@@ -127,7 +128,14 @@ namespace BankManagementSystem
 
 				PrintLoginScreen();
 				Console.WriteLine();
-				Print("Incorrect Username or Password! Please try again...", ConsoleColor.Red);
+
+				// Warn of non-existent Username.
+				// Otherwise, either Username *OR* the Password is incorrect.
+				Print(!bUsernameExists ?
+					"Incorrect Username!"
+					: "Incorrect Username or Password! Please try again...",
+					ConsoleColor.Red
+				);
 
 				ReceiveLoginInput(out Username, out Password);
 				ValidateLoginCredentials(Logins, Username, Password);

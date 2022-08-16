@@ -132,12 +132,15 @@ namespace BankManagementSystem.Core
 			return null;
 		}
 
-		/// <summary>The next Account Number.</summary>
+		/// <summary>The next Unique Account Number.</summary>
 		public static int Unique { get => GetNextAccountNumber(); }
+		// 8-Digit number.
 		static int UniqueAccountNumber = 10000001;
 
 		static int GetNextAccountNumber()
 		{
+			// Look for a unique Account Number by checking if a corresponding file exists.
+			// Return the first Number with no match.
 			while (FileSystem.FileExists(FileSystem.kDirectory, UniqueAccountNumber.ToString() + ".txt"))
 			{
 				++UniqueAccountNumber;

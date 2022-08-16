@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BankManagementSystem.IO
 {
+	/// <summary>Static Class for handling files.</summary>
 	public static class FileSystem
 	{
 		public const string kDirectory = "./";
@@ -24,6 +25,7 @@ namespace BankManagementSystem.IO
 
 			if (Mode == EWriteMode.Overwrite)
 			{
+				// Async when writing as a new file.
 				await File.WriteAllLinesAsync(PathAndName, Lines, Encoding);
 			}
 			else
@@ -31,20 +33,10 @@ namespace BankManagementSystem.IO
 				using StreamWriter File = new StreamWriter(PathAndName, true, Encoding);
 				foreach (string Line in Lines)
 				{
+					// No Async here because we're in a loop.
 					File.WriteLine(Line);
 				}
 			}
-		}
-
-		/// <summary>Writes string lines to a file.</summary>
-		/// <param name="Path">The path of the file to write to.</param>
-		/// <param name="NameOfFile">The name of the file to write to, including it's extension.</param>
-		/// <param name="Mode"><see cref="EWriteMode"/> append to the file (if it exists), or overwrite the file regardless of it's existing contents.</param>
-		/// <param name="Encoding">The type of <see cref="Encoding"/> to write as.</param>
-		/// <param name="Lines">The lines to write.</param>
-		public static async Task WriteToFileAsync(string Path, string NameOfFile, EWriteMode Mode, Encoding Encoding, string[] Lines)
-		{
-			await WriteToFile(Path, NameOfFile, Mode, Encoding, Lines);
 		}
 
 		/// <summary>Reads contents from a file into a <see cref="List{T}"/> of <see cref="string"/>s.</summary>
@@ -58,15 +50,18 @@ namespace BankManagementSystem.IO
 
 			try
 			{
+				// Open the file.
 				using StreamReader StreamReader = new StreamReader(Path + NameOfFile);
 
 				string Line;
 
+				// Add every line until EOF.
 				while ((Line = StreamReader.ReadLine()) != null)
 				{
 					ContentsInFile.Add(Line);
 				}
 
+				// Close the file.
 				StreamReader.Close();
 			}
 			catch (IOException)
@@ -80,7 +75,7 @@ namespace BankManagementSystem.IO
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine("File could not be read!\n" + e);
+				OutputHelpers.Print("File could not be read!\n" + e, ConsoleColor.Red);
 				return false;
 			}
 
@@ -96,6 +91,7 @@ namespace BankManagementSystem.IO
 		/// <summary>Deletes an Account, given an Account Number.</summary>
 		public static void DeleteAccount(int ID)
 		{
+			// Ensure only files in kDirectory get Deleted and nothing else!
 			if (FileExists(kDirectory, ID + ".txt"))
 				File.Delete(kDirectory + ID + ".txt");
 		}

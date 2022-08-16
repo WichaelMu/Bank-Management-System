@@ -28,8 +28,9 @@ namespace BankManagementSystem.IO
 			}
 			else
 			{
+				// If Content is odd in length, there isn't really a middle, so just subtract one from the right.
 				bool bContentIsOdd = Content.Length % 2 == 1;
-				PrintWithCustomPadding(Content, LeftRightPadding, LeftRightPadding - (bContentIsOdd ? 1 : 0), bWithBorder: true, Border);
+				PrintWithCustomPadding(Content, LeftRightPadding, LeftRightPadding - (bContentIsOdd ? 1 : 0), Border: Border);
 			}
 		}
 
@@ -44,6 +45,7 @@ namespace BankManagementSystem.IO
 		/// <param name="Border">The character that represents vertical borders.</param>
 		public static void PrintWithCustomPadding(string Content, int LeftPadding, int RightPadding, bool bWithBorder = true, char Border = kBorder)
 		{
+			// Empty Padding strings.
 			string Left = new string(' ', LeftPadding);
 			string Right = new string(' ', RightPadding);
 
@@ -80,7 +82,7 @@ namespace BankManagementSystem.IO
 		/// <param name="Border">The character that represents vertical borders.</param>
 		public static void PrintNewLineWithBorder(int CharacterLimit, char Border = kBorder)
 		{
-			PrintWithCustomPadding("", 0, CharacterLimit, bWithBorder: true, Border: Border);
+			PrintWithCustomPadding("", 0, CharacterLimit, Border: Border);
 		}
 
 		/// <summary>
@@ -109,23 +111,37 @@ namespace BankManagementSystem.IO
 			Result = CharacterLimit - Content.Length;
 		}
 
+		/// <summary>Set the <see cref="Console.ForegroundColor"/> and <see cref="Console.BackgroundColor"/>.</summary>
+		/// <param name="FColour">The colour of the font.</param>
+		/// <param name="BColour">The colour of the console behind the font.<br>Default is <see cref="ConsoleColor.Black"/>.</br></param>
 		public static void SetColours(ConsoleColor FColour, ConsoleColor BColour = ConsoleColor.Black)
 		{
 			Console.ForegroundColor = FColour;
 			Console.BackgroundColor = BColour;
 		}
 
+		/// <summary>Reset <see cref="Console.ForegroundColor"/> and <see cref="Console.BackgroundColor"/> to default values.</summary>
 		public static void ResetColours()
 		{
 			SetColours(ConsoleColor.Gray);
 		}
 
+		/// <summary>Removes any characters on the current line.</summary>
+		/// <remarks>Will only go until <see cref="BMS.CharacterLimit"/> <see langword="*"/> <see langword="2"/>.</remarks>
 		public static void ClearLine()
 		{
 			Console.Write(new string(' ', BMS.CharacterLimit * 2));
 			Console.CursorLeft = 0;
 		}
 
+		/// <summary>
+		/// Writes <paramref name="FColour"/> followed by a line terminator, to the standard output stream.
+		/// <br></br><br></br>
+		/// Essentially a replacement for <see cref="Console.WriteLine"/>, with Colour and line clearing functionality.
+		/// </summary>
+		/// <param name="Content">The string value of what will be printed to the Console.</param>
+		/// <param name="FColour">The colour of the font.<br>Default is <see cref="ConsoleColor.Gray"/>.</br></param>
+		/// <param name="BColour">The colour of the console behind the font.<br>Default is <see cref="ConsoleColor.Black"/>.</br></param>
 		public static void Print(string Content, ConsoleColor FColour = ConsoleColor.Gray, ConsoleColor BColour = ConsoleColor.Black)
 		{
 			// Set Colours.

@@ -31,17 +31,23 @@ namespace BankManagementSystem
 				"7. Exit"
 			};
 
+			// Print the title.
 			PrintTitle(kWelcomeMessage);
 
+			// Loop over and print the Prompts.
 			for (int i = 1; i < 8; ++i)
 			{
 				PaddingUntilEnd(Prompts[i], CharacterLimit, out int Padding);
 				PrintWithCustomPadding(Prompts[i], kTabSize, Padding - 4);
 			}
 
+			// Separating Border.
 			PrintWithBorder(HorizontalBorder);
+
+			// Print request for Input.
 			PaddingUntilEnd(Prompts[0], CharacterLimit, out int PromptPadding);
 			PrintWithCustomPadding(Prompts[0], kTabSize, PromptPadding - 4);
+
 			PrintWithBorder(HorizontalBorder);
 		}
 
@@ -70,11 +76,14 @@ namespace BankManagementSystem
 					RunDeleteSequence();
 					break;
 				case D7: // Exit.
+					// Do not exit the program once we have sent all pending Emails.
 					if (Email.IsAwaitingAsyncEmail())
 					{
 						Console.SetCursorPosition(0, 14);
 						Print("Cannot exit right now, we're still sending Emails!", ConsoleColor.Yellow);
 						ReceiveMainMenuInput();
+
+						Email.SetAllowEmailSendResultsPrinting(true);
 					}
 
 					return;

@@ -26,6 +26,8 @@ using static BankManagementSystem.IO.OutputHelpers;
 
 namespace BankManagementSystem.IO
 {
+	/// <summary>Utility class that dispatches e-mail messages.</summary>
+	/// <remarks>Provides an API that abstracts the complexity of C# e-mail dispatchers.</remarks>
 	public static class Email
 	{
 #if WITH_EMAIL
@@ -104,7 +106,7 @@ namespace BankManagementSystem.IO
 				// If the Email was successfully sent...
 				else
 				{
-					Print("Message sent.", ConsoleColor.Green);
+					Print("Email Message sent. You may now exit the Bank Management System.", ConsoleColor.Green);
 				}
 			}
 		}

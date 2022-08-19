@@ -132,8 +132,8 @@ namespace BankManagementSystem
 
 				// Warn of non-existent Username.
 				// Otherwise, either Username *OR* the Password is incorrect.
-				Print(!bUsernameExists ?
-					"Incorrect Username!"
+				Print(!bUsernameExists
+					? "Incorrect Username!"
 					: "Incorrect Username or Password! Please try again...",
 					ConsoleColor.Red
 				);

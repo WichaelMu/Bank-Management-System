@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 using BankManagementSystem.IO;
 
 namespace BankManagementSystem.Core
@@ -34,6 +35,13 @@ namespace BankManagementSystem.Core
 		/// <returns>Issues regarding this Account's validity, if any.</returns>
 		public EValidationResult Validate()
 		{
+			// Remove Leading and Trailing white-space.
+			Input.Trim(ref FirstName);
+			Input.Trim(ref LastName);
+			Input.Trim(ref Address);
+			Input.Trim(ref Email);
+
+			// Check for empty inputs.
 			if (FirstName.Length == 0 || LastName.Length == 0 || Address.Length == 0 || Email.Length == 0)
 				return EValidationResult.FieldsEmpty;
 
@@ -72,6 +80,9 @@ namespace BankManagementSystem.Core
 
 			// Check for an illegal Email Address.
 			if (!bValidEmailPrefix)
+				Result |= (byte)EValidationResult.IllegalEmailAddress;
+
+			if (!new EmailAddressAttribute().IsValid(Email))
 				Result |= (byte)EValidationResult.IllegalEmailAddress;
 
 			// The result can be thought of as a byte -> EValidationResult conversion.

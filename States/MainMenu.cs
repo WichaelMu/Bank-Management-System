@@ -79,11 +79,11 @@ namespace BankManagementSystem
 					// Do not exit the program until we have sent all pending Emails.
 					if (Email.IsAwaitingAsyncEmail())
 					{
+						Email.SetAllowEmailSendResultsPrinting(true);
+
 						Console.SetCursorPosition(0, 14);
 						Print("Cannot exit right now, we're still sending Emails!", ConsoleColor.Yellow);
 						ReceiveMainMenuInput();
-
-						Email.SetAllowEmailSendResultsPrinting(true);
 					}
 
 					return;

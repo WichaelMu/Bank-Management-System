@@ -12,7 +12,7 @@ namespace BankManagementSystem
 
 			// Bank Management System terminates here...
 			OutputHelpers.Print("\nPress Any Key to Terminate...", ConsoleColor.Cyan);
-			Console.ReadKey();
+			Input.Any();
 		}
 	}
 }

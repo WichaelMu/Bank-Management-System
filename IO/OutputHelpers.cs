@@ -135,7 +135,7 @@ namespace BankManagementSystem.IO
 		}
 
 		/// <summary>
-		/// Writes <paramref name="FColour"/> followed by a line terminator, to the standard output stream.
+		/// Writes <paramref name="Content"/> followed by a line terminator, to the standard output stream.
 		/// <br></br><br></br>
 		/// Essentially a replacement for <see cref="Console.WriteLine"/>, with Colour and line clearing functionality.
 		/// </summary>

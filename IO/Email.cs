@@ -61,7 +61,7 @@ namespace BankManagementSystem.IO
 
 #if WITH_EMAIL_SEND_RESULTS
 			// Notify on Email Sent.
-			Client.SendCompleted += Client_SendCompleted;
+			Client.SendCompleted += Client_OnSendCompleted;
 #endif // WITH_EMAIL_SEND_RESULTS
 
 			// Dispose the Email and SMTP Client once it has been sent.
@@ -88,7 +88,7 @@ namespace BankManagementSystem.IO
 		/// <summary>Called once when the corresponding Email Address is sent.</summary>
 		/// <param name="Sender">The object that called this Event.</param>
 		/// <param name="Args">Async Event Arguments.</param>
-		static void Client_SendCompleted(object Sender, AsyncCompletedEventArgs Args)
+		static void Client_OnSendCompleted(object Sender, AsyncCompletedEventArgs Args)
 		{
 			if (bShouldPrintResults)
 			{
@@ -126,6 +126,7 @@ namespace BankManagementSystem.IO
 		/// <returns><see langword="true"/> if this Program is waiting on, or still sending an Email.</returns>
 		public static bool IsAwaitingAsyncEmail()
 		{
+			// We have pending Emails to be sent if this value is not zero.
 			return EmailsRemainingToBeSent != 0;
 		}
 #else

@@ -16,6 +16,8 @@ namespace BankManagementSystem.Core
 		/// <summary>The Email is not valid.</summary>
 		IllegalEmailAddress = 8,
 		/// <summary>One or more fields are empty.</summary>
-		FieldsEmpty = 16
+		FieldsEmpty = 16,
+		/// <summary>A field contains the delimiter '|'.</summary>
+		IllegalCharacters = 32
 	}
 }

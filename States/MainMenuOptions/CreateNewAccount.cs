@@ -158,6 +158,8 @@ namespace BankManagementSystem
 								"\n\t- @uts.edu.au", ConsoleColor.Red);
 				if ((ValidationResult & EValidationResult.IllegalEmailAddress) == EValidationResult.IllegalEmailAddress)
 					Print("Invalid Email Address!", ConsoleColor.Red);
+				if ((ValidationResult & EValidationResult.IllegalCharacters) == EValidationResult.IllegalCharacters)
+					Print("Illegal Characters in Field/s! Do not use '|'.", ConsoleColor.Red);
 
 				// Prompt for retry or cancellation.
 				Print("\nPress any key to retry or 'x' to cancel...");

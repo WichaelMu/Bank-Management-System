@@ -60,6 +60,12 @@ namespace BankManagementSystem.Core
 			// The first character of an Email Address must be a letter.
 			bool bValidEmailPrefix = !Email.StartsWith('@') && char.IsLetter(Email[0]);
 
+			// No field can have the delimiter '|'.
+			bool bLegalCharacters = !FirstName.Contains('|');
+			bLegalCharacters &= !LastName.Contains('|');
+			bLegalCharacters &= !Address.Contains('|');
+			bLegalCharacters &= !Email.Contains('|');
+
 			// If the above three conditions are met, the Email Address is considered valid.
 			if (bValidEmailAddress && bValidDomain && bValidEmailPrefix)
 				return EValidationResult.Passed;
@@ -85,11 +91,14 @@ namespace BankManagementSystem.Core
 			if (!new EmailAddressAttribute().IsValid(Email))
 				Result |= (byte)EValidationResult.IllegalEmailAddress;
 
+			if (!bLegalCharacters)
+				Result |= (byte)EValidationResult.IllegalCharacters;
+
 			// The result can be thought of as a byte -> EValidationResult conversion.
 			return (EValidationResult)Result;
 		}
 
-		/// <summary>Get's <see cref="FirstName"/> with the appropriate possessive apostrophe form.</summary>
+		/// <summary>Gets <see cref="FirstName"/> with the appropriate possessive apostrophe form.</summary>
 		public string GetDecoratedName()
 		{
 			// Last element Index Operator.
@@ -169,7 +178,8 @@ namespace BankManagementSystem.Core
 				.Append("</tr>");
 
 				// Write the Transfers to the Email Message.
-				for (int i = System.Math.Max(0, Transfers.Count - 5); i < Transfers.Count; ++i)
+				int Last5Start = System.Math.Max(0, Transfers.Count - 5);
+				for (int i = Last5Start; i < Transfers.Count; ++i)
 				{
 					Transfer Transfer = Transfers[i];
 

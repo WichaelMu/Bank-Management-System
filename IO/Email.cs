@@ -12,14 +12,18 @@
 #endif
 
 #if WITH_EMAIL
+
 #if WITH_EMAIL_SEND_RESULTS
 using System;
 #endif // WITH_EMAIL_SEND_RESULTS
+
 using System.ComponentModel;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+
 #endif // WITH_EMAIL
+
 #if WITH_EMAIL_SEND_RESULTS || !WITH_EMAIL
 using static BankManagementSystem.IO.OutputHelpers;
 #endif // WITH_EMAIL_SEND_RESULTS || !WITH_EMAIL

@@ -67,6 +67,8 @@ namespace BankManagementSystem.IO
 			return Double();
 		}
 
+		/// <summary>Removes any leading and trailing white-space from <paramref name="ToTrim"/>.</summary>
+		/// <param name="ToTrim">The string to trim.</param>
 		public static void Trim(ref string ToTrim)
 		{
 			ToTrim = ToTrim.Trim();

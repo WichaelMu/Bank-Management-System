@@ -55,7 +55,7 @@ namespace BankManagementSystem
 				// Cannot exceed a length of 10.
 				if (IntAsString.Length > 10)
 				{
-					Print("Account Numbers do not exceed 8 digits!", ConsoleColor.Red);
+					Print("Account Numbers do not exceed 10 digits!", ConsoleColor.Red);
 				}
 				else if (int.TryParse(IntAsString, out _) && !SearchAccountID(IntAsString))
 				{

@@ -17,7 +17,7 @@ namespace BankManagementSystem
 			{
 				PrintAccountStatement(Account);
 				if (ReceiveEmailInput())
-					Account.Dispatch(true);
+					SendEmail(Account);
 			}
 
 			RunMainMenuSequence();
@@ -150,6 +150,15 @@ namespace BankManagementSystem
 
 			// True if the User wants an Email of this Account's Statement.
 			return Key == 'Y' || Key == 'y';
+		}
+
+		void SendEmail(Account Account)
+		{
+			Account.Dispatch(true);
+
+			Print("Your Account Statement is being sent! Press any key to return to the Main Menu...", ConsoleColor.Green);
+
+			Input.Any();
 		}
 	}
 }

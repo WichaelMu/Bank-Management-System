@@ -24,7 +24,7 @@ namespace BankManagementSystem.Core
 #endif // WITH_ERROR_CHECKS
 				foreach (string Credential in LoginData)
 				{
-					// If this iteration Credential is empty.
+					// If this iteration if Credential is empty.
 					bool bCredentialLineIsEmpty = string.IsNullOrEmpty(Credential);
 
 					// Skip any '!' (comment markers in login.txt), or skip if the line is empty.

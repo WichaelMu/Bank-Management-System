@@ -33,9 +33,10 @@ namespace BankManagementSystem.IO
 				using StreamWriter File = new StreamWriter(PathAndName, true, Encoding);
 				foreach (string Line in Lines)
 				{
-					// No Async here because we're in a loop.
-					File.WriteLine(Line);
+					await File.WriteLineAsync(Line);
 				}
+
+				File.Close();
 			}
 		}
 

@@ -108,11 +108,15 @@ namespace BankManagementSystem.Core
 			return FirstName + ApostropheSuffix;
 		}
 
+		/// <summary>Gets the last five Transfers made to this Account.</summary>
+		/// <param name="OutTransfers">The Transfers.</param>
+		/// <returns>The number of Transfers. Maximum Five.</returns>
 		public int GetLastFiveTransfers(out Transfer[] OutTransfers)
 		{
-			// Get Last 5, clamped between 0 and 5.
+			// Start from the fifth-last Transfer, or the beginning.
 			int Last5Start = Math.Min(Transfers.Count, Math.Max(0, Transfers.Count - 5));
 
+			// Malloc either 5, or the number of Transfers.
 			OutTransfers = new Transfer[Transfers.Count - Last5Start];
 
 			for (int i = Last5Start; i < Transfers.Count; ++i)

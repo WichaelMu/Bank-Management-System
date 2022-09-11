@@ -51,18 +51,18 @@ namespace BankManagementSystem
 			PrintTitle(kCreateAccountTitle);
 
 			// Calculate centre-alignment padding spaces.
-			AutoCentre(kPrompt, CharacterLimit, out int DetailPadding);
+			AutoCentre(kPrompt, out int DetailPadding);
 
 			// Calculate tabbed prompt padding spaces.
-			PaddingUntilEnd(kFirstName, CharacterLimit, out int FNPadding);
-			PaddingUntilEnd(kLastName, CharacterLimit, out int LNPadding);
-			PaddingUntilEnd(kAddress, CharacterLimit, out int APadding);
-			PaddingUntilEnd(kPhoneNumber, CharacterLimit, out int PNPadding);
-			PaddingUntilEnd(kEmailAddress, CharacterLimit, out int EPadding);
+			PaddingUntilEnd(kFirstName, out int FNPadding);
+			PaddingUntilEnd(kLastName, out int LNPadding);
+			PaddingUntilEnd(kAddress, out int APadding);
+			PaddingUntilEnd(kPhoneNumber, out int PNPadding);
+			PaddingUntilEnd(kEmailAddress, out int EPadding);
 
 			// Print prompt.
 			PrintWithBorder(kPrompt, DetailPadding);
-			PrintNewLineWithBorder(CharacterLimit);
+			PrintNewLineWithBorder();
 
 			// Print prompt messages.
 			PrintWithCustomPadding(kFirstName, kTabSize, FNPadding - 4);

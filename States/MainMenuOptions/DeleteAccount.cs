@@ -29,12 +29,12 @@ namespace BankManagementSystem
 
 			PrintTitle(kDeleteTitle);
 
-			AutoCentre(kPrompt, CharacterLimit, out int PromptPadding);
+			AutoCentre(kPrompt, out int PromptPadding);
 
 			PrintWithBorder(kPrompt, PromptPadding);
-			PrintNewLineWithBorder(CharacterLimit);
+			PrintNewLineWithBorder();
 
-			PaddingUntilEnd(kAccountNumberPrompt, CharacterLimit, out int ANPadding);
+			PaddingUntilEnd(kAccountNumberPrompt, out int ANPadding);
 
 			PrintWithCustomPadding(kAccountNumberPrompt, kTabSize, ANPadding - 4);
 

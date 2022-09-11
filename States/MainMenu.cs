@@ -37,7 +37,7 @@ namespace BankManagementSystem
 			// Loop over and print the Prompts.
 			for (int i = 1; i < 8; ++i)
 			{
-				PaddingUntilEnd(Prompts[i], CharacterLimit, out int Padding);
+				PaddingUntilEnd(Prompts[i], out int Padding);
 				PrintWithCustomPadding(Prompts[i], kTabSize, Padding - 4);
 			}
 
@@ -45,7 +45,7 @@ namespace BankManagementSystem
 			PrintWithBorder(HorizontalBorder);
 
 			// Print request for Input.
-			PaddingUntilEnd(Prompts[0], CharacterLimit, out int PromptPadding);
+			PaddingUntilEnd(Prompts[0], out int PromptPadding);
 			PrintWithCustomPadding(Prompts[0], kTabSize, PromptPadding - 4);
 
 			PrintWithBorder(HorizontalBorder);
@@ -92,7 +92,7 @@ namespace BankManagementSystem
 
 					const string kRetryInput = "Please Enter a Choice (1-7): ";
 
-					PaddingUntilEnd(kRetryInput, CharacterLimit, out int PromptPadding);
+					PaddingUntilEnd(kRetryInput, out int PromptPadding);
 
 					SetColours(ConsoleColor.Red);
 					PrintWithCustomPadding(kRetryInput, kTabSize, PromptPadding - 4);

@@ -80,9 +80,9 @@ namespace BankManagementSystem.IO
 		/// <summary>Prints a new line with borders.</summary>
 		/// <param name="CharacterLimit">The width of the console where the borders should lie.</param>
 		/// <param name="Border">The character that represents vertical borders.</param>
-		public static void PrintNewLineWithBorder(int CharacterLimit, char Border = kBorder)
+		public static void PrintNewLineWithBorder(char Border = kBorder)
 		{
-			PrintWithCustomPadding("", 0, CharacterLimit, Border: Border);
+			PrintWithCustomPadding("", 0, BMS.CharacterLimit, Border: Border);
 		}
 
 		/// <summary>
@@ -91,9 +91,9 @@ namespace BankManagementSystem.IO
 		/// <param name="Content">The <see cref="string"/> to centre-align in the console.</param>
 		/// <param name="CharacterLimit">The width of the console where the borders should lie.</param>
 		/// <param name="Result">Outs the padding size of the left and right sides.</param>
-		public static void AutoCentre(string Content, int CharacterLimit, out int Result)
+		public static void AutoCentre(string Content, out int Result)
 		{
-			int HalfLimit = CharacterLimit / 2;
+			int HalfLimit = BMS.CharacterLimit / 2;
 			int HalfContent = Content.Length / 2;
 			Result = HalfLimit - HalfContent;
 		}
@@ -106,9 +106,9 @@ namespace BankManagementSystem.IO
 		/// <param name="Result">
 		/// Outs the padding right-side padding size that aligns with the vertical borders.
 		/// </param>
-		public static void PaddingUntilEnd(string Content, int CharacterLimit, out int Result)
+		public static void PaddingUntilEnd(string Content, out int Result)
 		{
-			Result = CharacterLimit - Content.Length;
+			Result = BMS.CharacterLimit - Content.Length;
 		}
 
 		/// <summary>Set the <see cref="Console.ForegroundColor"/> and <see cref="Console.BackgroundColor"/>.</summary>
@@ -158,7 +158,7 @@ namespace BankManagementSystem.IO
 		/// <summary>Prints a title with borders.</summary>
 		public static void PrintTitle(string Content)
 		{
-			AutoCentre(Content, BMS.CharacterLimit, out int Padding);
+			AutoCentre(Content, out int Padding);
 
 			PrintWithBorder(BMS.HorizontalBorder);
 			PrintWithBorder(Content, Padding);

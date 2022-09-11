@@ -26,13 +26,13 @@ namespace BankManagementSystem
 
 			PrintTitle(kDepositTitle);
 
-			AutoCentre(kPrompt, CharacterLimit, out int PromptPadding);
+			AutoCentre(kPrompt, out int PromptPadding);
 
 			PrintWithBorder(kPrompt, PromptPadding);
-			PrintNewLineWithBorder(CharacterLimit);
+			PrintNewLineWithBorder();
 
-			PaddingUntilEnd(kAccountNumberPrompt, CharacterLimit, out int ANPadding);
-			PaddingUntilEnd(kAmount, CharacterLimit, out int APadding);
+			PaddingUntilEnd(kAccountNumberPrompt, out int ANPadding);
+			PaddingUntilEnd(kAmount, out int APadding);
 
 			PrintWithCustomPadding(kAccountNumberPrompt, kTabSize, ANPadding - 4);
 			PrintWithCustomPadding(kAmount, kTabSize, APadding - 4);

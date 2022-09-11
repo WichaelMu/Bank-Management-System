@@ -33,12 +33,12 @@ namespace BankManagementSystem
 
 			PrintTitle(kStatementTitle);
 
-			AutoCentre(kPrompt, CharacterLimit, out int PromptPadding);
+			AutoCentre(kPrompt,out int PromptPadding);
 
 			PrintWithBorder(kPrompt, PromptPadding);
-			PrintNewLineWithBorder(CharacterLimit);
+			PrintNewLineWithBorder();
 
-			PaddingUntilEnd(kAccountNumberPrompt, CharacterLimit, out int ANPadding);
+			PaddingUntilEnd(kAccountNumberPrompt, out int ANPadding);
 
 			PrintWithCustomPadding(kAccountNumberPrompt, kTabSize, ANPadding - 4);
 
@@ -113,18 +113,18 @@ namespace BankManagementSystem
 
 			PrintTitle(kStatementTitle);
 
-			AutoCentre(kStatementSubtitle, CharacterLimit, out int SubtitlePadding);
+			AutoCentre(kStatementSubtitle, out int SubtitlePadding);
 
-			PaddingUntilEnd(AccountNumber, CharacterLimit, out int ANPadding);
-			PaddingUntilEnd(AccountBalance, CharacterLimit, out int ABPadding);
-			PaddingUntilEnd(FirstName, CharacterLimit, out int FNPadding);
-			PaddingUntilEnd(LastName, CharacterLimit, out int LNPadding);
-			PaddingUntilEnd(Address, CharacterLimit, out int APadding);
-			PaddingUntilEnd(PhoneNumber, CharacterLimit, out int PNPadding);
-			PaddingUntilEnd(EmailAddress, CharacterLimit, out int EPadding);
+			PaddingUntilEnd(AccountNumber, out int ANPadding);
+			PaddingUntilEnd(AccountBalance, out int ABPadding);
+			PaddingUntilEnd(FirstName, out int FNPadding);
+			PaddingUntilEnd(LastName, out int LNPadding);
+			PaddingUntilEnd(Address, out int APadding);
+			PaddingUntilEnd(PhoneNumber, out int PNPadding);
+			PaddingUntilEnd(EmailAddress, out int EPadding);
 
 			PrintWithBorder(kStatementSubtitle, SubtitlePadding);
-			PrintNewLineWithBorder(CharacterLimit);
+			PrintNewLineWithBorder();
 
 			PrintWithCustomPadding(AccountNumber, kTabSize, ANPadding - 4);
 			PrintWithCustomPadding(AccountBalance, kTabSize, ABPadding - 4);
@@ -151,8 +151,8 @@ namespace BankManagementSystem
 			string Last5Title = $"Your Last {TotalLast} Statements";
 
 			// 2 Lines as Empty Space.
-			PrintNewLineWithBorder(CharacterLimit, ' ');
-			PrintNewLineWithBorder(CharacterLimit, ' ');
+			PrintNewLineWithBorder(' ');
+			PrintNewLineWithBorder(' ');
 
 			// 3 Lines to Print the Title.
 			PrintTitle(Last5Title);
@@ -160,7 +160,7 @@ namespace BankManagementSystem
 			for (int i = 0; i < LastTransfers.Length; ++i)
 			{
 				string StatementSubtitle = $"Statement #{i + 1}";
-				AutoCentre(StatementSubtitle, CharacterLimit, out int SPadding);
+				AutoCentre(StatementSubtitle, out int SPadding);
 
 				Transfer T = LastTransfers[i];
 
@@ -169,22 +169,22 @@ namespace BankManagementSystem
 				string Amount = $"Amount: {T.Amount:C0}";
 				string Balance = $"Resulting Balance: {T.Balance:C0}";
 
-				PaddingUntilEnd(Type, CharacterLimit, out int TPadding);
-				PaddingUntilEnd(Date, CharacterLimit, out int DPadding);
-				PaddingUntilEnd(Amount, CharacterLimit, out int APadding);
-				PaddingUntilEnd(Balance, CharacterLimit, out int BPadding);
+				PaddingUntilEnd(Type, out int TPadding);
+				PaddingUntilEnd(Date, out int DPadding);
+				PaddingUntilEnd(Amount, out int APadding);
+				PaddingUntilEnd(Balance, out int BPadding);
 
 				// 8 Lines for each Transfer.
 
 				PrintWithBorder(StatementSubtitle, SPadding);
-				PrintNewLineWithBorder(CharacterLimit);
+				PrintNewLineWithBorder();
 
 				PrintWithCustomPadding(Type, kTabSize, TPadding - 4);
 				PrintWithCustomPadding(Date, kTabSize, DPadding - 4);
 				PrintWithCustomPadding(Amount, kTabSize, APadding - 4);
 				PrintWithCustomPadding(Balance, kTabSize, BPadding - 4);
 
-				PrintNewLineWithBorder(CharacterLimit);
+				PrintNewLineWithBorder();
 				PrintWithBorder(HorizontalBorder);
 			}
 		}

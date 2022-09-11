@@ -39,15 +39,15 @@ namespace BankManagementSystem
 			// Calculate login alignments.
 
 			// Centre-align the Login prompt.
-			AutoCentre(kLoginMessage, CharacterLimit, out int LoginPromptPadding);
+			AutoCentre(kLoginMessage, out int LoginPromptPadding);
 
 			// Neatly align the Username and Password Prompts.
-			PaddingUntilEnd(kUserNamePrompt, CharacterLimit, out int UserNamePromptPadding);
-			PaddingUntilEnd(kPasswordPrompt, CharacterLimit, out int PasswordPromptPadding);
+			PaddingUntilEnd(kUserNamePrompt, out int UserNamePromptPadding);
+			PaddingUntilEnd(kPasswordPrompt, out int PasswordPromptPadding);
 
 			// Login Prompt
 			PrintWithBorder(kLoginMessage, LoginPromptPadding);
-			PrintNewLineWithBorder(CharacterLimit);
+			PrintNewLineWithBorder();
 
 			// Prompt for Username and Password.
 			PrintWithCustomPadding(kUserNamePrompt, kTabSize, UserNamePromptPadding - 4);
@@ -62,8 +62,8 @@ namespace BankManagementSystem
 			const string kAuthorTitle = "Application Development with .NET";
 			const string kName = "Written by: Michael Wu";
 
-			AutoCentre(kAuthorTitle, CharacterLimit, out int ADNETPadding);
-			AutoCentre(kName, CharacterLimit, out int MWPadding);
+			AutoCentre(kAuthorTitle, out int ADNETPadding);
+			AutoCentre(kName, out int MWPadding);
 
 			PrintWithBorder(kAuthorTitle, ADNETPadding, Border: ' ');
 			PrintWithBorder(kName, MWPadding, Border: ' ');

@@ -23,11 +23,11 @@ namespace BankManagementSystem
 
 			PrintTitle(kSearchAccountTitle);
 
-			AutoCentre(kPrompt, CharacterLimit, out int PromptPadding);
-			PaddingUntilEnd(kAccountNumber, CharacterLimit, out int AccountNumberPadding);
+			AutoCentre(kPrompt, out int PromptPadding);
+			PaddingUntilEnd(kAccountNumber, out int AccountNumberPadding);
 
 			PrintWithBorder(kPrompt, PromptPadding);
-			PrintNewLineWithBorder(CharacterLimit);
+			PrintNewLineWithBorder();
 
 			PrintWithCustomPadding(kAccountNumber, kTabSize, AccountNumberPadding - 4);
 			PrintWithBorder(HorizontalBorder);
@@ -136,20 +136,20 @@ namespace BankManagementSystem
 			string Email = $"{kEmail}{FromID.Email}";
 
 			// Align fields.
-			PaddingUntilEnd(AccountNo, CharacterLimit, out int ANPadding);
-			PaddingUntilEnd(AccountBalance, CharacterLimit, out int ABPadding);
-			PaddingUntilEnd(FirstName, CharacterLimit, out int FNPadding);
-			PaddingUntilEnd(LastName, CharacterLimit, out int LNPadding);
-			PaddingUntilEnd(Address, CharacterLimit, out int APadding);
-			PaddingUntilEnd(Phone, CharacterLimit, out int PPadding);
-			PaddingUntilEnd(Email, CharacterLimit, out int EPadding);
+			PaddingUntilEnd(AccountNo, out int ANPadding);
+			PaddingUntilEnd(AccountBalance, out int ABPadding);
+			PaddingUntilEnd(FirstName, out int FNPadding);
+			PaddingUntilEnd(LastName, out int LNPadding);
+			PaddingUntilEnd(Address, out int APadding);
+			PaddingUntilEnd(Phone, out int PPadding);
+			PaddingUntilEnd(Email, out int EPadding);
 
 			// Blank line.
 			Console.WriteLine();
 
 			// Write Title.
 			PrintTitle(kAccountTitle);
-			PrintNewLineWithBorder(CharacterLimit);
+			PrintNewLineWithBorder();
 
 			// Write fields.
 			PrintWithCustomPadding(AccountNo, kTabSize, ANPadding - 4);

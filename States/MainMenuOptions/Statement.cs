@@ -16,7 +16,9 @@ namespace BankManagementSystem
 			if (Account)
 			{
 				PrintAccountStatement(Account);
-				if (ReceiveEmailInput())
+				PrintLastFiveTransfers(Account, out int TotalLast);
+
+				if (ReceiveEmailInput(TotalLast))
 					SendEmail(Account);
 			}
 
@@ -135,9 +137,65 @@ namespace BankManagementSystem
 			PrintWithBorder(HorizontalBorder);
 		}
 
-		bool ReceiveEmailInput()
+		void PrintLastFiveTransfers(Account Account, out int TotalLast)
 		{
-			Console.SetCursorPosition(0, 14);
+			if (Account.Transfers.Count == 0)
+			{
+				TotalLast = 0;
+				return;
+			}
+
+			int Last5 = Account.GetLastFiveTransfers(out Transfer[] LastTransfers);
+
+			TotalLast = Account.Transfers.Count - Last5;
+			string Last5Title = $"Your Last {TotalLast} Statements";
+
+			// 2 Lines as Empty Space.
+			PrintNewLineWithBorder(CharacterLimit, ' ');
+			PrintNewLineWithBorder(CharacterLimit, ' ');
+
+			// 3 Lines to Print the Title.
+			PrintTitle(Last5Title);
+
+			for (int i = 0; i < LastTransfers.Length; ++i)
+			{
+				string StatementSubtitle = $"Statement #{i + 1}";
+				AutoCentre(StatementSubtitle, CharacterLimit, out int SPadding);
+
+				Transfer T = LastTransfers[i];
+
+				string Type = T.Type.ToString();
+				string Date = T.Date;
+				string Amount = $"Amount: {T.Amount:C0}";
+				string Balance = $"Resulting Balance: {T.Balance:C0}";
+
+				PaddingUntilEnd(Type, CharacterLimit, out int TPadding);
+				PaddingUntilEnd(Date, CharacterLimit, out int DPadding);
+				PaddingUntilEnd(Amount, CharacterLimit, out int APadding);
+				PaddingUntilEnd(Balance, CharacterLimit, out int BPadding);
+
+				// 8 Lines for each Transfer.
+
+				PrintWithBorder(StatementSubtitle, SPadding);
+				PrintNewLineWithBorder(CharacterLimit);
+
+				PrintWithCustomPadding(Type, kTabSize, TPadding - 4);
+				PrintWithCustomPadding(Date, kTabSize, DPadding - 4);
+				PrintWithCustomPadding(Amount, kTabSize, APadding - 4);
+				PrintWithCustomPadding(Balance, kTabSize, BPadding - 4);
+
+				PrintNewLineWithBorder(CharacterLimit);
+				PrintWithBorder(HorizontalBorder);
+			}
+		}
+
+		bool ReceiveEmailInput(int TotalLast)
+		{
+			Console.SetCursorPosition(0, TotalLast != 0
+				? TotalLast * 8 + 19 // 8 Lines are printed for each Transfer, and 14 + 5 for any the Last Statement Titles.
+				: 14 // If there are no Transfers to print.
+			);
+
 			Print("Email Account Statment (y/n)?");
 
 			Input.Char(out char Key);

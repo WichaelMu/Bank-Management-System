@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
@@ -107,6 +108,19 @@ namespace BankManagementSystem.Core
 			return FirstName + ApostropheSuffix;
 		}
 
+		public int GetLastFiveTransfers(out Transfer[] OutTransfers)
+		{
+			// Get Last 5, clamped between 0 and 5.
+			int Last5Start = Math.Min(Transfers.Count, Math.Max(0, Transfers.Count - 5));
+
+			OutTransfers = new Transfer[Transfers.Count - Last5Start];
+
+			for (int i = Last5Start; i < Transfers.Count; ++i)
+				OutTransfers[i - Last5Start] = Transfers[i];
+
+			return Last5Start;
+		}
+
 		/// <summary>Updates this Account's file.</summary>
 		public async void Write()
 		{
@@ -178,10 +192,10 @@ namespace BankManagementSystem.Core
 				.Append("</tr>");
 
 				// Write the Transfers to the Email Message.
-				int Last5Start = System.Math.Max(0, Transfers.Count - 5);
-				for (int i = Last5Start; i < Transfers.Count; ++i)
+				GetLastFiveTransfers(out Transfer[] LastTransfers);
+				for (int i = 0; i < LastTransfers.Length; ++i)
 				{
-					Transfer Transfer = Transfers[i];
+					Transfer Transfer = LastTransfers[i];
 
 					EmailMessage
 					.Append("<tr><td>")

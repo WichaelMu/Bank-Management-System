@@ -56,7 +56,7 @@ namespace BankManagementSystem.Core
 				}
 
 				if (OutCredentials.Count == 0)
-					Print("There are no Login Credentials in login.txt!", ConsoleColor.Magenta);
+					Print("There are no Login Credentials in login.txt!\nPlease create Login Credentials as per instructions in login.txt", ConsoleColor.Magenta);
 
 				return OutCredentials.Count != 0;
 			}

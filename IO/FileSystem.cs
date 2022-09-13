@@ -68,15 +68,19 @@ namespace BankManagementSystem.IO
 			catch (IOException)
 			{
 				// In case NameOfFile doesn't exist, just create it.
-				FileStream NewFile = File.Create(Path + NameOfFile);
-				NewFile.Close(); // Make sure it is closed.
+				File.WriteAllLines(Path + NameOfFile, new string[] {
+					"! Login Credentials are configured in the format <YOUR_USERNAME>|<YOUR_PASSWORD>",
+					"! For example, the configuration:",
+					"! MichaelWu|Password",
+					"! would indicate that 'MichaelWu' is the Username",
+					"! and 'Password' is the Password" });
 
 				// Recursively retry reading from this file after creating.
 				return ReadFromFile(Path, NameOfFile, out ContentsInFile);
 			}
 			catch (Exception e)
 			{
-				OutputHelpers.Print("File could not be read!\n" + e, ConsoleColor.Red);
+				Output.Print("File could not be read!\n" + e, ConsoleColor.Red);
 				return false;
 			}
 

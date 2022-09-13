@@ -1,5 +1,5 @@
 ﻿using System;
-using static BankManagementSystem.IO.OutputHelpers;
+using static BankManagementSystem.IO.Output;
 
 namespace BankManagementSystem.IO
 {

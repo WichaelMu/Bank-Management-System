@@ -2,7 +2,7 @@
 using System.Text;
 using BankManagementSystem.Core;
 using BankManagementSystem.IO;
-using static BankManagementSystem.IO.OutputHelpers;
+using static BankManagementSystem.IO.Output;
 
 namespace BankManagementSystem
 {

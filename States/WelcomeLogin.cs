@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using BankManagementSystem.Core;
-using static BankManagementSystem.IO.OutputHelpers;
+using static BankManagementSystem.IO.Output;
 
 namespace BankManagementSystem
 {
@@ -17,12 +17,13 @@ namespace BankManagementSystem
 			PrintLoginScreen();
 
 			// Read and parse the login information here as early warnings of misconfigred logins.
-			Dictionary<string, string> Logins = AccountParser.ReadLogins();
+			if (AccountParser.ReadLogins(out Dictionary<string, string> Logins))
+			{
+				ReceiveLoginInput(out string Username, out string Password);
+				ValidateLoginCredentials(Logins, Username, Password);
 
-			ReceiveLoginInput(out string Username, out string Password);
-			ValidateLoginCredentials(Logins, Username, Password);
-
-			RunMainMenuSequence();
+				RunMainMenuSequence();
+			}
 		}
 
 		const string kUserNamePrompt = "User Name: ";
@@ -139,6 +140,8 @@ namespace BankManagementSystem
 				);
 
 				ReceiveLoginInput(out Username, out Password);
+
+				// Retry login credentials.
 				ValidateLoginCredentials(Logins, Username, Password);
 			}
 		}

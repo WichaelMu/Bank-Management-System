@@ -105,6 +105,7 @@ namespace BankManagementSystem.Core
 			// Last element Index Operator.
 			char LastChar = FirstName[^1];
 			string ApostropheSuffix = LastChar == 'S' || LastChar == 's' ? "'" : "'s";
+
 			return FirstName + ApostropheSuffix;
 		}
 

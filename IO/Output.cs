@@ -4,7 +4,7 @@ using System.Text;
 namespace BankManagementSystem.IO
 {
 	/// <summary>Utility class that helps with printing to the console.</summary>
-	public static class OutputHelpers
+	public static class Output
 	{
 		/// <summary>The character representing the vertical borders.</summary>
 		const char kBorder = '|';
@@ -173,11 +173,14 @@ namespace BankManagementSystem.IO
 		/// <br></br>
 		/// DayOfWeek, Day of Month Year HH:mm:ss
 		/// </summary>
+		/// <example>Wednesday, 28 of February 2001 15:16:17</example>
 		public static string FormatDate()
 		{
 			DateTime Now = DateTime.Now;
 			TimeSpan Time = Now.TimeOfDay;
+
 			StringBuilder TimeBuilder = new StringBuilder();
+
 			TimeBuilder
 			.Append(Now.ToString("D"))
 			.Append(" ")

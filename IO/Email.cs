@@ -25,7 +25,7 @@ using System.Text;
 #endif // WITH_EMAIL
 
 #if WITH_EMAIL_SEND_RESULTS || !WITH_EMAIL
-using static BankManagementSystem.IO.OutputHelpers;
+using static BankManagementSystem.IO.Output;
 #endif // WITH_EMAIL_SEND_RESULTS || !WITH_EMAIL
 
 namespace BankManagementSystem.IO

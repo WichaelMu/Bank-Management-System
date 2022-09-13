@@ -11,7 +11,7 @@ namespace BankManagementSystem
 			new BMS().Execute();
 
 			// Bank Management System terminates here...
-			OutputHelpers.Print("\nPress Any Key to Terminate...", ConsoleColor.Cyan);
+			Output.Print("\nPress Any Key to Terminate...", ConsoleColor.Cyan);
 			Input.Any();
 		}
 	}

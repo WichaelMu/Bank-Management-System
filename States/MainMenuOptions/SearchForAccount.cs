@@ -14,6 +14,8 @@ namespace BankManagementSystem
 			PrintAccountSearch();
 			if (ReceiveRequestedAccountNumber())
 				RequestCheckAnother(true);
+
+			RunMainMenuSequence();
 		}
 
 		void PrintAccountSearch()

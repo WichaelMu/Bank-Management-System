@@ -16,7 +16,7 @@ namespace BankManagementSystem
 
 			PrintLoginScreen();
 
-			// Read and parse the login information here as early warnings of misconfigred logins.
+			// Read and parse the login information here as early warnings of misconfigured logins.
 			if (AccountParser.ReadLogins(out Dictionary<string, string> Logins))
 			{
 				ReceiveLoginInput(out string Username, out string Password);

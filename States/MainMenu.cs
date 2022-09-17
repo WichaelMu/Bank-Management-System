@@ -86,6 +86,7 @@ namespace BankManagementSystem
 						ReceiveMainMenuInput();
 					}
 
+					MainProgram.Terminate();
 					return;
 				default: // Illegal Input.
 					Console.SetCursorPosition(0, 11);

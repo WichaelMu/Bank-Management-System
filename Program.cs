@@ -3,7 +3,7 @@ using BankManagementSystem.IO;
 
 namespace BankManagementSystem
 {
-	class Program
+	class MainProgram
 	{
 		static void Main()
 		{
@@ -11,8 +11,16 @@ namespace BankManagementSystem
 			new BMS().Execute();
 
 			// Bank Management System terminates here...
+			Terminate();
+		}
+
+		public static void Terminate()
+		{
 			Output.Print("\nPress Any Key to Terminate...", ConsoleColor.Cyan);
 			Input.Any();
+
+			// Terminates this Process with exit code: 0.
+			Environment.Exit(0);
 		}
 	}
 }

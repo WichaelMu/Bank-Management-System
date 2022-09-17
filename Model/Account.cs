@@ -67,8 +67,8 @@ namespace BankManagementSystem.Core
 			bLegalCharacters &= !Address.Contains('|');
 			bLegalCharacters &= !Email.Contains('|');
 
-			// If the above three conditions are met, the Email Address is considered valid.
-			if (bValidEmailAddress && bValidDomain && bValidEmailPrefix)
+			// If the above conditions are met, the Email Address is considered valid.
+			if (bValidEmailAddress && bValidDomain && bValidEmailPrefix && bLegalCharacters)
 				return EValidationResult.Passed;
 
 			// Byte gives us eight different errors.

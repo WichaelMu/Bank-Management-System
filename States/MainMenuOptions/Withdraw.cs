@@ -87,7 +87,7 @@ namespace BankManagementSystem
 
 			Console.SetCursorPosition(14, 6);
 
-			// Protect the Account Number from being an illegal value.
+			// Protect the Amount from being an illegal value.
 			int Amount;
 			string AmountAsString = string.Empty;
 			Account FromID = AccountParser.ConstructFromFile(AccountNumber);
@@ -98,10 +98,10 @@ namespace BankManagementSystem
 				ClearLine();
 
 				// Cannot exceed a length of 10.
-				if (AmountAsString.Length > 10)
+				if (AmountAsString.Length >= 10)
 				{
 					// 1 << 31 is already 10 digits. Prevent overflow.
-					Print("Account Numbers do not exceed 10 digits!", ConsoleColor.Red);
+					Print("Invalid Withdraw Amount! Amount was too large, please try again.", ConsoleColor.Red);
 				}
 				// If AmountAsString IS a number.
 				else if (int.TryParse(AmountAsString, out int TriedAmount))
@@ -121,7 +121,7 @@ namespace BankManagementSystem
 					Print("Enter the desired amount with numbers only! Use 'x' to Cancel.", ConsoleColor.Red);
 				}
 
-				// Set the position to the end of the Account Number.
+				// Set the position to the end of the Amount.
 				Console.SetCursorPosition(14 + AmountAsString.Length, 6);
 
 				// Backspace any illegal characters (non-number string)

@@ -87,7 +87,7 @@ namespace BankManagementSystem
 			// If the Input is NaN or is > 10, loop.
 			while (!int.TryParse(IntAsString, out AccountNumber) || IntAsString.Length > 10 || !SearchAccountID(AccountNumber));
 
-			// Protect the Account Number from being an illegal value.
+			// Protect the Amount from being an illegal value.
 			int Amount;
 			string AmountAsString = string.Empty;
 			Account FromID = AccountParser.ConstructFromFile(AccountNumber);
@@ -98,10 +98,10 @@ namespace BankManagementSystem
 				ClearLine();
 
 				// Cannot exceed a length of 10.
-				if (AmountAsString.Length > 10)
+				if (AmountAsString.Length >= 10)
 				{
 					// 1 << 31 is already 10 digits. Prevent overflow.
-					Print("Account Numbers do not exceed 10 digits!", ConsoleColor.Red);
+					Print("Invalid Deposit Amount! Amount was too large, please try again.", ConsoleColor.Red);
 				}
 				// If AmountAsString IS a number, but the Amount is negative.
 				else if (int.TryParse(AmountAsString, out int TriedAmount) && TriedAmount < 0)

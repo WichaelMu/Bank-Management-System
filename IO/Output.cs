@@ -46,8 +46,8 @@ namespace BankManagementSystem.IO
 		public static void PrintWithCustomPadding(string Content, int LeftPadding, int RightPadding, bool bWithBorder = true, char Border = kBorder)
 		{
 			// Empty Padding strings.
-			string Left = new string(' ', LeftPadding);
-			string Right = new string(' ', RightPadding);
+			string Left = new string(' ', Math.Max(LeftPadding, 0));
+			string Right = new string(' ', Math.Max(RightPadding, 0));
 
 			// Append Borders and/or Padding with StringBuilder.
 			StringBuilder SB = new StringBuilder();
@@ -108,7 +108,7 @@ namespace BankManagementSystem.IO
 		/// </param>
 		public static void PaddingUntilEnd(string Content, out int Result)
 		{
-			Result = BMS.CharacterLimit - Content.Length;
+			Result = Math.Max(BMS.CharacterLimit - Content.Length, 0);
 		}
 
 		/// <summary>Set the <see cref="Console.ForegroundColor"/> and <see cref="Console.BackgroundColor"/>.</summary>
